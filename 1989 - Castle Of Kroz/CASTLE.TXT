@@ -1,0 +1,86 @@
+|Bษอออออออออออออออหออออออออออออออออออออออออออออออออออออออออออออออหอออออออออออออออป
+|Bบ |6Fun and Games|B บ               ^1 Castle of Kroz |B               บ |6Fun and Games|B บ
+|Bศอออออออออออออออสออออออออออออออออออออออออออออออออออออออออออออออสอออออออออออออออผ
+^Cby
+^CScott Miller
+
+
+    CASTLE OF KROZ is a game of exploration and survival.  The journey will
+ take you through 20 dangerous chambers riddled with diabolical traps and
+ hideous creatures.  Hidden in the deepest dungeon lies the priceless Crown of
+ Kroz - your quest.  Use the numeric keypad to move the player in eight
+ different directions.
+
+    The chambers contain treasures, spells, traps, and other dangers.  The
+ object of CASTLE OF KROZ is to collect as much treasure as possible while
+ advancing to the highest levels.  Touching an object for the first time will
+ reveal a little of its identity (a description is displayed at the bottom of
+ the screen), but you must decide how best to use or avoid an object.
+
+    Before beginning the game, choose between a fast (<F>) or a slow (<S>)
+ setting.  CASTLE OF KROZ defaults to the slow setting.  Now you must choose
+ between the different levels - Novice: <N>
+                                Experienced: <E>
+                                Advanced: <A>
+
+    Press any key and choose between beginning the game by pressing <B>, or
+ viewing the instructions by selecting <I>.  The right side of the screen
+ contains the score, the level at which you are playing, the gems you've
+ collected, the whips you have left, teleports remaining, and keys in your
+ possession.  The options, with the letter to activate them highlighted, are
+ listed in the bottom righthand corner of the screen: <W>hips, <T>eleport,
+ <P>ause, <Q>uit, <S>ave, and <R>estore.
+
+      Whips destroy the creatures and access the chambers.
+      Teleport will randomly move your player to another position on the
+      screen.
+      Pause stops the game temporarily, but Quit takes you back to the Big Blue
+      Disk Main Menu.
+      Save and Restore allow you to retain higher level games.
+
+    When a creature touches you, it will vanish, taking with it a few of the
+ gems that you have collected.  If you run into a creature and you have no gems
+ you will lose your life!  Whips (<W>) can be used to kill nearby creatures,
+ but they're better used to smash through "crumbled walls" and other terrain.
+
+    It's a good idea to save your game at the higher levels.  That way, you
+ will not have to start the game over at Level I.  Restore (<R>) the game at
+ the higher level and try again!
+
+    CASTLE OF KROZ will present you with many challenges.  Venture deep
+ underground and try to make it out alive!  Here are some tips:
+
+           *  Touch each new object to discover something about it.  When you
+           first touch an object, a message appears at the bottom of the screen
+           that describes the object.
+
+           *  Collect keys to unlock doors that lead to more treasures.
+
+           *  The fastest monsters are the most dangerous to touch; they will
+           cost you three of your valuable gems.  The slowest creatures only
+           take a single gem while the medium speed monsters take two.
+
+           *  Each level presents you with new objects to discover.
+
+           *  Don't forget to use the <Home>, <End>, <PgUp>, and <PgDn> keys to
+           move your on-screen character diagonally with the marked <ARROW
+           KEYS>.
+
+    This game CAN be completed, I have finished this game at the "Advanced"
+ skill level with over 120 gems and 60 whips to spare.  On the "Novice" level,
+ I can play and win one handed!  There are many tricks that can help you;
+ however, you can complete CASTLE OF KROZ without these hidden maneuvers.
+
+  PCjr players can use
+  the alternate cursor               U I O      ( NW N NE )
+   pad instead of the                 J K       (   W E   )
+   cursor keys to move               N M ,      ( SW S SE )
+  your man, and the four
+   normal cursor keys.
+
+
+    To run this program outside ^1Big Blue Disk^0, type: ^1CASTLE^0.
+
+DISK FILES THIS PROGRAM USES:
+^FCASTLE.EXE
+^FCASTLE.HS

@@ -1,0 +1,38 @@
+|Aษออออออออออออออปออออออออออออออออออออออออออออออออออออออออออออออออษออออออออออออออป
+|Aบ |6Fun 'n Games |Aบออออออออออออออออ ^1Caverns of Kroz |Aอออออออออออออออบ |6Fun 'n Games |Aบ
+|Aศออออออออออออออผออออออออออออออออออออออออออออออออออออออออออออออออศออออออออออออออผ
+^Cby                                                                          
+^CScott Miller                                                                
+                                                                              
+    Welcome to another adventure from the world of Kroz.  First discovered in  
+ Kingdom of Kroz published on Big Blue Disk #20, the series was continued eight 
+ issues later (BBD #28) with Dungeons of Kroz.  Well, Scott Miller has returned 
+ with a new set of adventures called the ^1Caverns of Kroz^0.                  
+                                                                               
+    The Caverns of Kroz is a game of exploration and survival.  Your journey   
+ will take you through 40 very perilous levels, each riddled with diabolical   
+ traps and hideous creatures.  Hidden in the deepest cavern lies the priceless  
+ Amulet--your quest.                                                          
+                                                                              
+    The dungeons contain dozens of treasures, spells, traps, and other        
+ mysteries.  Touching an object for the first time will reveal a little of its  
+ identity, but it will be left up to you decide how best to use it or avoid it.
+ When a creature touches you it will vanish, taking a few of your gems that you 
+ have collected.  If you have no gems, the creature will instead take your     
+ life!  Whips can be used to kill nearby creatures, but they are better used to 
+ smash through crumbled walls and forest terrain.                            
+                                                                              
+    You can save a game in progress in order to resume after an interruption or 
+ have several tries at a tough level without retracing all previous levels.   
+ However, only the status as of the beginning of the current level is saved;  
+ anything you did after you entered the level won't be saved.  You've got to  
+ make it to the end of the level and save again for your later gains to be    
+ preserved.                                                                   
+                                                                              
+    To run this program outside the ^1Big Blue Disk^0 menu, type: ^1Caverns^0. 
+                                                                               
+ DISK FILES THIS PROGRAM USES:                                                 
+ ^FCAVERNS.COM                                                                  
+ ^FCAVERNS.000                                                                 
+ ^FCAVERNS.DAT                                                                 
+ ^FCAVERNS.HS                                                                  

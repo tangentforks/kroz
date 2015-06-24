@@ -1,0 +1,500 @@
+{//-------------------------------------------------------------------------}
+{/*                                                                         }
+{Copyright (C) 1987, 2009 - Apogee Software, Ltd.                           }
+{                                                                           }
+{This file is part of Kroz. Kroz is free software; you can redistribute it  }
+{and/or modify it under the terms of the GNU General Public License         }
+{as published by the Free Software Foundation; either version 2             }
+{of the License, or (at your option) any later version.                     }
+{                                                                           }
+{This program is distributed in the hope that it will be useful,            }
+{but WITHOUT ANY WARRANTY; without even the implied warranty of             }
+{MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       }
+{                                                                           }
+{See the GNU General Public License for more details.                       }
+{                                                                           }
+{You should have received a copy of the GNU General Public License          }
+{along with this program; if not, write to the Free Software                }
+{Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.}
+{                                                                           }
+{Original Source: 1987-1990 Scott Miller                                    }
+{Prepared for public release: 03/19/09 - Joe Siegler, Apogee Software, Ltd. }
+{*/                                                                         }
+{//-------------------------------------------------------------------------}
+{*** THE LOST ADVENTURES OF KROZ level layouts.  By Scott Miller 11/12/89 ***}
+
+unit LOST2B;
+
+interface
+
+procedure Level48;
+procedure Level52;
+procedure Level53;
+procedure Level54;
+procedure Level55;
+procedure Level56;
+procedure Level59;
+procedure Level61;
+procedure Level64;
+procedure Level66;
+procedure Level68;
+procedure Level70;
+procedure Level72;
+procedure Level74;
+procedure Level75;
+
+
+implementation { ---------------------------------------------------------- }
+
+uses Turbo3, CRT, DOS, Lost1;
+
+procedure Level48;
+ begin
+  FP[1]:= '##################RRRRRRRRRRR#the#swamp#RRRRRRR-\\¸\\\\/\\\\\\\C';
+  FP[2]:= 'LLñDëDìD--VVVV--44----------------------------RR-\\\\\\\\\\\\\\\';
+  FP[3]:= 'LLëDîDëD--VVVV--44--RRRRRRRRRRRRRRRRRRRRRRRR--RRR-/\\\\\\\\\U\\\';
+  FP[4]:= '##################RRRR-------------------------RRR-\\\\/\\\\\\\\';
+  FP[5]:= 'RRRRRRRRRRRRRRRRRRRRRR--RRRRRRRRRRRRRRRRRRRRK))RRRR--\\\\\\\\\\\';
+  FP[6]:= 'R-----RRR-------R----)))RR)))))))3)3)3)3)3)3)3)3)3RRR--\\\\\\\\\';
+  FP[7]:= 'R-RRRìRR-RRRRRRR-RRR-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR--/\\\/\¸';
+  FP[8]:= 'R-RR-RR-RRR\\\RRR-RRR--------------------------ï-------RR--\\\\\';
+  FP[9]:= 'R-RRRR-RR\\\K\\RRR-RR-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR--\\\';
+  FP[10]:='R-RRR-RRRR\\\\\\RRR-RR------------Z-8í-999999999999ˆ--RRRRRRR--\';
+  FP[11]:='R-RR-RRRR\\\\\\¸\RR-RRR-RRRRRRRRRRRRR8-111111111111RRR-----RRRR-';
+  FP[12]:='R---RRRRRR-\\\RRRR-RRRRRFRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR-RRRR';
+  FP[13]:='RRRR-RRRRR-RRRRRR-RRRS(((((+((((((((((((((((((K++(3RRRRRRRRR-RRR';
+  FP[14]:='RRRRR-RRRR„„RRRR-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR*R.R*RRR-RR';
+  FP[15]:='RRRRRRTRRR1R-RR-RRR@@@@@@@RRRRRRRRRRRRRRRRRR-----------í-ÛRRRÒRR';
+  FP[16]:='###RRRRRR11RR--RRRR@@RRRRFRR-66----H----------RRRRRRR*R.R*RRRRRR';
+  FP[17]:='77###RRR111RR--RR*F@@@22@WRR-RR-RRORRRRRRRRRRRRRRRRRRRRRRRRRRR  ';
+  FP[18]:='7777###RR11RR--RR*F@@@22@WRR-RR-RRORR                          P';
+  FP[19]:='77777###RR1RR--RR*F@@@22@WRR-RR-RRORR  RRRRRRRRR-RRRRRRRRRRRRR  ';
+  FP[20]:='77!777###RRRR--RR*F@@@22@WRR-RR-RR>RRFSRRRRRRRRR‡RRRRRRRRRRRRRRR';
+  FP[21]:='7777777##RRRR--RR*F@@@22@WRR-RR-RRRRR‡‡‡‡‡‡‡‡‡‡3333333333C‡‡‡‡‡‡';
+  FP[22]:='77777777##RRR--RRRRFFRRRRRRR-RR-RRRRRRRRRRRRRRRRRRRRRRRRRRRRRR--';
+  FP[23]:='U7777777##RRR----------------RR---------------------------------';
+  Fast:=#234;{or #1}
+  Convert_Format;
+ end; { Level48 }
+
+procedure Level52;
+ begin 
+  FP[1]:= 'ë  ]  ë]ë   ]ëë] î]]ñ  ëëë]ëëî ] ñ ë    ë]ëë         ñ]ëîë] ë---';
+  FP[2]:= ' ëñ ë] ë îë] ëñ ë ]ë ëë ]îëñ] ë ë ë ]ëëî ]ñ ëë]ëëñ]ëî ë]ëë ë -P-';
+  FP[3]:= '  ñëë]ë îë] ñë ë] ë ëë]îÒ ñë] ëëë]ëñî]ëë ë ]ëë    ñ] ëîë] ëëë---';
+  FP[4]:= 'ñë ë]îëë]ë ëñ]ë ëî ]ëëë]ñë ë]ë   îë]ëëñ  ] ëë ë]îë  ë]ëñë] ëëî]ë';
+  FP[5]:= 'ë]ñ  ëë]ëëî ]ë ñë]ëë  ë]ëî ë]ñëë] ëëë] îëñ ]ëë   ë]ëëî]ëñë]  ëëë';
+  FP[6]:= 'ëëñ]î ëë]ëëë ]ë ñî  ]ë  ëë] ëëë] ñëî  ]ëëë ]ëëñ]î ëë]   ëëë]ë ñë';
+  FP[7]:= 'îëë] ëëë  ]ñë  î] ëëë]ëë ñ]ë ëë ]îë ë]ëëñ]ë ëî]ëë ë] ëñë ]ëëî] ë';
+  FP[8]:= 'ë]ë ñë  ]ë ëî]ëë ë]ñ  ëë] ëîë  ]ëë ëñ]ëëî]ëë  ë]ëë  ñ]  ëîë]ëëë ';
+  FP[9]:= 'ñë ]ë îë]ëë     ë]ë ñë ]îë ë]ëëñ] ëë     ë]îëë ]ëëñ]ë ëî]ë  ëë ]';
+  FP[10]:='ë ñ] ëëë ]îëë]ëñë] ëëî] ëëë ]ñëë ]ë ëî]ëë ëñ]ëë ëë]î ëë]ë ñë ]ë ';
+  FP[11]:=' ëî ]ëë ë ñ ] ë ëë] ëîë] ëñëÛ]ëë ë]ë îë]ñë ë]ëëÚë]î ëñ]ëë ë] ë ë';
+  FP[12]:=']  îñë ]ëë ë ] ë   ëñ]îëë   ]ëëë]   ëñî]ëëë    ]ëëë]     ëñî] ëë';
+  FP[13]:='#####444############follow#the#bread#crumbs#####################';
+  FP[14]:='‡‡‡‡#555#&‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡@MMMMMMMMK##LL';
+  FP[15]:='‡‡‡‡66666‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡@MMMMMMMMM##ìë';
+  FP[16]:='‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡@MMMMMMMMM##``';
+  FP[17]:='‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡@MMMMMMMMM##ëì';
+  FP[18]:='‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡!‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡@MMMMMMMMM##``';
+  FP[19]:='‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡@MMMMMMMMM##ìë';
+  FP[20]:='‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡@MMMMMMMMM##--';
+  FP[21]:='‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡@MMMMMMMMM##--';
+  FP[22]:='00‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡@MMMMMMMMM##--';
+  FP[23]:='K0‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡‡@MMMMMMMMM66--';
+  Fast:=#234;{or #1}
+  Convert_Format;
+  MakeFloor(#250,6,7,0,0); HideCreate:=true; HideMBlock:=true;
+ end; { Level52 }
+
+procedure Level53;
+ begin
+  FP[1]:= 'U----------; 55555------------------------í--##-U-##            ';
+  FP[2]:= 'XXXXXXXXXª-; ##≥############################-##---## ##≥≥≥≥≥≥##π';
+  FP[3]:= '-----------; #2≥2#K--B-----------------------##---## ##≥≥≥≥≥≥##-';
+  FP[4]:= '-----------; ##≥##-############################-I-## ##W≥≥≥≥W##-';
+  FP[5]:= '-----------; #2≥2#      M   M   M   M   M    ##---## ##-W≥≥W-##-';
+  FP[6]:= '-----------; ##≥############################-##---## ##::WW::##-';
+  FP[7]:= 'XX∫XXXX----; #2≥2#≥------------------K-------##---## ##2 22 2##-';
+  FP[8]:= '------;----; ##≥##≥####################-----:##---## ##########-';
+  FP[9]:= '------;----; #2≥2#≥-----------------------:::##---## C--í7;-;---';
+  FP[10]:='------;----; ##≥##≥---------------------::-::##---## ##########-';
+  FP[11]:='[-----;----; #2≥2#--------------------:::::-:##-Û-## -1--1--Ò##-';
+  FP[12]:='------;----; ##≥##XXXXXXXXXXXXΩ-----::::::::-##---## ##########-';
+  FP[13]:='------;----; #2≥|#-------------XXX::::::::::"##---## -------C##-';
+  FP[14]:='------;----; ##≥##--------------Ω##############---##4##########-';
+  FP[15]:='------;----; #2≥2#---------------#####-º----C##---##--------K##-';
+  FP[16]:='------;----; ##≥##`::::::::::::::##º##XOXXXXX##---##4##########-';
+  FP[17]:='------;----; #2≥2#--`---ì---`LL# Ú-----------66ııı##--------<##-';
+  FP[18]:='------;--ª-; ##≥################ ::≥::;;;;;;;##888##4##########-';
+  FP[19]:='------#3333#     F               ##H##3333333##VVV##--------∫##-';
+  FP[20]:='------######XXXXXXXXXXXXXXXXXXXXX###################4##########-';
+  FP[21]:='-------------------------I--------------------------------------';
+  FP[22]:='XXπXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+  FP[23]:='                                P                               ';
+  Fast:=#234;{or #1}
+  Convert_Format;
+  GravOn:=true;GravRate:=0;Sideways:=true;
+ end; { Level53 }
+
+procedure Level54;
+ begin
+  FP[1]:= '  P  ##-U--------##-------##∫Ò------------------##--DDDD-Ú-KKKKK';
+  FP[2]:= 'II#II##----------##≥#####-##--------------777---##ª5555555555555';
+  FP[3]:= 'M   M###########-##≥-----ì###########X##∫##í######-##LLLLLLLLLLL';
+  FP[4]:= 'M   M##---;---------------##K---------##-##7-<[|##-#############';
+  FP[5]:= 'M   M###-#########################---###-######X##-----ë----í-C"';
+  FP[6]:= 'M   M##----------------î----------7ë7-44--------##-#############';
+  FP[7]:= 'M   M##-######################################∫-##-≥≥≥≥≥≥≥≥≥≥≥≥≥';
+  FP[8]:= 'M   M##---------------------------------D--K##--##-]]]]]]]]]]?]]';
+  FP[9]:= 'M   M######################################-##--##-abcdefghijklm';
+  FP[10]:='M   M##K≥`≥:≥-≥-≥-≥:≥-≥:≥:≥-≥:≥-≥-≥-≥:≥:≥##-##--##-#############';
+  FP[11]:='M   M##-≥`≥-≥:≥-≥:≥:≥:≥-≥-≥:≥-≥:≥-≥:≥:≥-≥##-##--##-##---------ı!';
+  FP[12]:='M   M##-≥`≥:≥:≥-≥:≥-≥:≥:≥-≥:≥:≥-≥-≥:≥:≥:≥##-##--##-##≥##########';
+  FP[13]:='M   M##-≥`≥:≥:≥-≥:≥-≥:≥-≥-≥:≥-≥:≥-≥:≥:≥:≥##-##--##-##-----------';
+  FP[14]:='M   M##-≥`≥:≥-≥-≥:≥:≥-≥:≥-≥:≥:≥:≥-≥:≥-≥:≥##-##--##-########≥####';
+  FP[15]:='M   M##-≥`≥:≥-≥-≥:≥-≥:≥:≥7≥:≥:≥:≥-≥:≥:≥-≥##-##--##-##-----------';
+  FP[16]:='M   M##-≥`≥-≥:≥-≥:≥:≥:≥:≥î≥:≥-≥:≥-≥:≥-≥:≥##-##-.##-####≥########';
+  FP[17]:='M   M##-≥-≥-≥:≥-≥:≥:≥-≥-≥-≥:≥:≥-≥-≥:≥-≥:≥##-##--##-##-----------';
+  FP[18]:='M   M##:≥:≥:≥:≥:≥:≥:≥:≥:≥:≥:≥:≥:≥-≥:≥:≥:≥≥≥≥##--##-############≥';   
+  FP[19]:='M   M##---                       ;          ##--##ı88----------≥';
+  FP[20]:='M   M##-##VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV##--##0############≥';
+  FP[21]:='M   M##D######################################--##~------------≥';
+  FP[22]:='M K M##K-π1ππ1ππ1π11π1ππ11π11π1π11ππ1ππ1ππ11π-∫-44ª------------≥';
+  FP[23]:='M U M##K--π11π11π1ππ1π11ππ1ππ1π1ππ11π11π11ππ1π--44--------------';
+  Fast:=#234;{or #1}
+  Convert_Format;
+  GravOn:=true;GravRate:=0;Sideways:=true;
+ end; { Level54 }
+
+procedure Level55;
+ begin
+  FP[1]:= 'ì P          ;           1   ï#diary∑#day#five∏#################';
+  FP[2]:= '#######################XXXX#####################################';
+  FP[3]:= 'VVVYVVVVVVVVVVVVVVVVVVV----VVV#you∂ve#traveled#deeper#into#kroz#';
+  FP[4]:= 'VVVVVVVVVVVVVVVVVVYYVV-ñ--VVVV##################################';
+  FP[5]:= 'VVVVVVVYYVVVVVVVVVVYVV----VVYV#than#ever#before¥##where#will####';
+  FP[6]:= 'YVVVVVVVYVVVVYVVVVVVV----VVVVV##################################';
+  FP[7]:= 'VVVVVVVVVVVVVVVVVVVV--ì-VVVVVV#the#many#chambers#lead#toµ##and##';
+  FP[8]:= 'VVVYVVVVVVYVVVVVVVV----VVYYVVV##################################';
+  FP[9]:= 'VVVYVVVVVVVVVVVVVVV-ï--VVVYVVV#what#do#they#protect#belowµ######';
+  FP[10]:='VVVVVVVVVVVVYVVVVVVV----VVVVVV##################################';
+  FP[11]:='VVVVVVVYVVVVYYVVVVVV----VVVVYV#you#have#a#good#feeling#these####';
+  FP[12]:='VVVVVVVVVVVVVVVVVVV--ì-VVVVVVV##################################';
+  FP[13]:='VVYYYVVVVVVVVVVVVV----VVVVVVVV#questions#might#finally#be#######';
+  FP[14]:='VVVVVVVVYVVVYVVVV----VVVYYYVVV##################################';
+  FP[15]:='VVVVVVVVYVVVVVVV--ñ-VVVVVVVVVV#answered#during#this#expedition¥#';
+  FP[16]:='VVVVVVVVYVVVVVVV----VVVYYVVVVV##################################';
+  FP[17]:='YYVVVYVVVVVVVVV----VVVVYVVVVVV#but#can#you#survive#to#learn#the#';
+  FP[18]:='VYVVVVVVVVVVVV--ì-VVVVVVVVVVYV##################################';
+  FP[19]:='VVVVVVVVYVVVV----VVVYVVVVVVVVV#answersµ##a#deep#lava#pit#lies###';
+  FP[20]:='VVYVVVVVVVVV----VVVYYVVVVVVVVV##################################';
+  FP[21]:='VVYYVVVVVVV-ï--VVVVVVVVVVYYYVV#before#you#forbidding#your#######';
+  FP[22]:='VVVVVVVYVV----VVYYVVVVVVVVVVVV##################################';
+  FP[23]:='VVVVVVVVVLLLLVVVVYVVVVVYVVVVVV#progress¥¥¥it#doesn∂t#work¥¥¥√###';
+  Fast:=#234;{or #1}
+  Convert_Format;
+  GravOn:=true;GravRate:=1;Sideways:=true; HideStairs:=true;
+ end; { Level55 }
+
+procedure Level56;
+ begin
+  FP[1]:= 'YVV P VVVYVVVVVYVVVVVVYVVYVVVVVXXVVVVVVVVV#U#VVVVVVπ-----7í--!~+';
+  FP[2]:= 'VVV---VVVVVYVVVVVVVYVVVVYVVVYVVXXVVVVVVVVVV-VVVVVVVO#########X##';
+  FP[3]:= 'VYV---VVYVVVVVYVVVVVVYVVVVYVVVVXXVVVVVVVVV---VVVVVVOVVVVVVVVVRVV';
+  FP[4]:= 'VVVV---VVVYVVVVVYVYVVVVVYVVVVYVXXVVVVVVVVV---VVVVVVOVVVVVVVVVRVV';
+  FP[5]:= 'VVYV---VYVVVVYVVVVVVVYVVVVVYVVVXXVVVVVVVVV--VVVVVVVOVVVVVVVVVRVV';
+  FP[6]:= 'VVVVV---VVVVVVVYVVVVVVVYVVVVVYVXXVVVVVVVVVV--VVVVVVOVVVVVVVVVRVV';
+  FP[7]:= 'VVYVVV---VVYVYVVVVYVVVYVVVVYVVVXXVVVVVVVVVV--VVVVVVOVVVVVVVVVRVV';
+  FP[8]:= 'VYVVYVV---VVVVVYVVVVYVVVVYVVVYVXXVVVVVVVVVV--VVVVVVOVVVVVVVVVRVV';
+  FP[9]:= 'VVYVVVV---VVYVVVVYVVVVYVVVVYVVVXXVVVVVVVVVVVHHVVVVVOVVVVVVVVVRVV';
+  FP[10]:='VYVVYVVV---VVVYVVVVYVVVVYVVVYVVXXVVVVVVVVVVV--VVVVVOVVVVVVVVVRVV';
+  FP[11]:='VVVYVVYVV---VYVVYVVVVYVVVVYVVVVXXVVVVVVVVVVV--VVVVVOVVVVVVVVVRVV';
+  FP[12]:='VYVVYVVVV---VVVVVVVYVVVYVVVVVYVXXVVVVVVVVVV--VVVVVVOVVVVVVVVVRVV';
+  FP[13]:='VVVVVVVYVV---VVYVVYVVVVVVVYVYVVXXVVVVVVVVVV--VVVVVVOVVVVVVVVVRVV';
+  FP[14]:='VVYVYVVVV---VVVVYVVVVYVVYVVVVVVXXVVVVVVVVVV--VVVVVVOVVVVVVVVVRVV';
+  FP[15]:='YVVVVVVYVV---VVYVVYVVVVVVVVYVVVXXVVVVVVVVV--VVVVVVVOVVVVVVVVVRVV';
+  FP[16]:='VVYVVYVVVVV---VVVYVVVVVYVVVVVYVXXVVVVVVVVVπ-VVVVVVVOVVVVVVVVVRVV';
+  FP[17]:='VYVVVVVVYVV---VVYVVVVYVVVVVYVVVXXVVVVVVVVV--VVVVVVVOVVVVVVVVVRVV';
+  FP[18]:='VVVVYVYVVVYV---VVVVYVVVVYVVVYVVXXVVVVVVVVV--VVVVVVVOVVVVVVVVVRVV';
+  FP[19]:='VYVVVVVYVVVVV---VVYVVVYVVVYVVVVXXVVVVVVVV--VVVVVVVVOVVVVVVVVVRVV';
+  FP[20]:='VVVYVVVVVVYVVV---VVVYVVVYVVVVYVXXVVVVVVVV--VVVVVVVVOVVVVVVVVVRVV';
+  FP[21]:='YVVVVVVVYVVVYVV---VVVVYVVVYVVVVXXVVVVVVVV--VVVVVVVVOVVVVVVVVVRVV';
+  FP[22]:='VVVYVYVVVVYVVVV---VVYVVVYVVVVYVXXVVVVVVVVV--VVVVVVVOVVVVVVVVVRVV';
+  FP[23]:='VYVVVVYVVVVVYVV#U#VVVVYVVVYVYVVXXVVVVVVVVV----------VVVVVVVVLLLV';
+  Fast:=#234;{or #1}
+  Convert_Format;
+  GravOn:=true;GravRate:=1;Sideways:=true;
+ end; { Level56 }
+
+procedure Level59;
+ begin
+  FP[1]:= '##########K]K-----ÒD          00%00         DíDîDë&&LL##########';
+  FP[2]:= '##VVVVVV############          00000    .    ############VVVVVV##';
+  FP[3]:= '##VVVVVV44                                            44VVVVVV##';
+  FP[4]:= '##VVVVVV44      .      .                        .     44VVVVVV##';
+  FP[5]:= '#####44444                               )            44444#####';
+  FP[6]:= 'MMMM(                           P  .                       )MMMM';
+  FP[7]:= 'MMMM(                   (                                  )MMMM';
+  FP[8]:= 'MMMM(         .                                   (        )MMMM';
+  FP[9]:= 'MMMM(                                 .                    )MMMM';
+  FP[10]:='MMMM(                      44444444444                 .   )MMMM';
+  FP[11]:='MMMM(                      44VVVVVVV44                     )MMMM';
+  FP[12]:='CMMM(   .                  44VVVGVVV44       .             )MMMC';
+  FP[13]:='MMMM(          )       .   44VVVVVVV44                     )MMMM';
+  FP[14]:='MMMM(                      44444444444                     )MMMM';
+  FP[15]:='MMMM(                                           )          )MMMM';
+  FP[16]:='MMMM(                                   .                  )MMMM';
+  FP[17]:='MMMM(     .       .                                .       )MMMM';
+  FP[18]:='MMMM(                                                      )MMMM';
+  FP[19]:='#####44444                     .            .         44444#####';
+  FP[20]:='##VVVVVV44         (                     (            44VVVVVV##';
+  FP[21]:='##VVVVVV44                 )                          44VVVVVV##';
+  FP[22]:='##VVVVVV############          00000  .      ############VVVVVV##';
+  FP[23]:='##########K]-------Ò          00C00         D-D--K-K]K##########';
+  Fast:=#234;{or #1}
+  Convert_Format;
+  LavaFlow:=true;LavaRate:=140;
+  HideCreate:=true;HideOpenWall:=true;HideTrap:=true;HideMBlock:=true;
+ end; { Level59 }
+
+procedure Level61;
+ begin
+  FP[1]:= '     U--2--U--2--U--2--U--2--U--55-====-===--=====-===--==--=--=';
+  FP[2]:= ' #######-#####-#####-#####-#######=-==-=-=-==--==-=-=-==--==-==-';
+  FP[3]:= ' ######-B-###-B-###-B-###-B-######==--===-=====--===-==========-';
+  FP[4]:= ' ########chamber#of#horror########======================-------=';
+  FP[5]:= ' ##22222222222222222222222222##Û##=---=-=-=-==--==--=---========';
+  FP[6]:= ' ##22222222222222222222222222222##-===-=-=-=--==-=-=-=====-----=';
+  FP[7]:= ' ##22222222222222222222222########=-============-=-===----=====-';
+  FP[8]:= ' ##222222222222222222222226660LL##-==-=-=---====-==---======---=';
+  FP[9]:= ' ####-############################=--=-=-===-===-========---====';
+  FP[10]:='      ##---##„OOOOOOOOO33333333!##=========-====-====----===-===';
+  FP[11]:='########---##H####################==----====-====-î--========--Ú';
+  FP[12]:='<F  22##111##„„333333##33333333[##=-====-==-============--======';
+  FP[13]:='FF  22##‚‚‚##„„333333##333333333##-===-==-==------=====-==-=--==';
+  FP[14]:='    22##YYY##„„333333##333333333##-==-=-==-=======-===-====-==-=';
+  FP[15]:=' P  22##···##„#########444444444##=--==-==-======-===-========-=';
+  FP[16]:='    22##111##        ##         ##=====-===------===-==---=-===-';
+  FP[17]:='    22##‡‡‡######### ##   ##ë   ##=--==-============-=-===-=---=';
+  FP[18]:='    22##             ##   ë##   ##-==-==-=====---===-==--=======';
+  FP[19]:='    22##   ~~~~~  ## ##   ##ñ   ##=-==-==-===-===--==-===-=----=';
+  FP[20]:='    22##   ~~%~~  ## ##   ï##   ##==-==-==---==-===--==-==-====-';
+  FP[21]:='    22##   ~~0~~  ## ##   ##ë   ##===-=-======-=--====-=-=====-=';
+  FP[22]:='    22##Ù  ~~0~~  ## ##   ë##   ##=-=-==-=-==-==-=--==-=-==-===-';
+  FP[23]:='      77Ù  ~~     ##      ##ì   44-=-====-=--==|====--===--=---=';
+  Fast:=#1;
+  Convert_Format;
+ end; { Level61 }
+
+procedure Level64;
+ begin
+  FP[1]:= '3333333333333333333333333333333333333333333333333333##C33‡)))F‡Û';
+  FP[2]:= '4444444444444444444444444444444444444444444444444444##333‡))F)‡‡';
+  FP[3]:= 'LL@@@@;@@@@@@@F@@;@@@@@@@@F@@@;@@@@@@@@@F@@@@@@@@@@@##333‡))))F)';
+  FP[4]:= 'LL@;@@@@F@@;@@@@@@@@F@@;@@@@F@@@@@F@@@;@@@@@F@@@;@F@##333‡)F))))';
+  FP[5]:= '#########################@@@;@@@F@@;@@F@@@@F@@@F@@@@##333‡)))F))';
+  FP[6]:= '  Ê        ···      YY>##&@@@@F@;@@@F@@@F@@;@F@îîîîî##333‡)F))))';
+  FP[7]:= '88~  ÊÊ##-##3·      YYY#########################ÒÒÒÒ##333‡))))F)';
+  FP[8]:= 'Mı~  Ê3## ##3·              DëëFëëD77777777777##6666#####‡FFFFFF';
+  FP[9]:= 'Mı~  Ê3##S##3··········· P  #######77777777777##„„„„‚33##T‡‡‡‡‡‡';
+  FP[10]:='Mı~  Ê3##F##33333333333·   +##íKí##77777777777##„„„„‚‚‚####YYY##';
+  FP[11]:='Mı~ÊÊÊÊ#######################(((##77777777777--„„„„„„„„„„‚„„„„„';
+  FP[12]:='Mı~    ‰333333333WWW‰  ‰‰999##ííí###############################';
+  FP[13]:='Mı~    ‰‰‰‰‰‰‰‰‰‰‰‰‰‰  ##MMM##(((##33333333333333333333333333333';
+  FP[14]:='Mı~                   í##MOM##(((##33333333333333333333333333333';
+  FP[15]:='Mı~           ó     #####OMO##ííí##33333333333333333333333333333';
+  FP[16]:='Mı~               ‰‰##K##MOM##(((##(((((((((((((((((((((((((((((';
+  FP[17]:='Mı~   ó          ‰‰3##‰##OMO##((((((((((((((((((((((((((((((((((';
+  FP[18]:='Mı~             ‰‰33##-##MOM##(YY++YY((YYYYY+((+YYYY+(YYYYYYY(((';
+  FP[19]:='XX~            ‰‰333##-##OMO##(YY+YY+((YY++YY((YY++YY(++++YY+(((';
+  FP[20]:='XX~ ÁÁÁÁÁÁ ó  ‰‰3333##í##MOM##(YYYY++((YYYYY+((YY++YY(+++YY++(((';
+  FP[21]:='XX~ Á3333Á    ‰3333C##-##OUO##(YYYY++((YY+YY+((YY++YY(++YY+++(((';
+  FP[22]:='XX~ ##################-#######(YY+YY+((YY++YY((YY++YY(+YY++++(((';
+  FP[23]:='X!~     ÁÁÁÁÁ          ‰‰‰~H##(YY++YY((YY++YY((+YYYY+(YYYYYYY((U';
+  Fast:=#1; 
+  Convert_Format;
+ end; { Level64 }
+
+procedure Level66;
+ begin
+  FP[1]:= '--------------------#figurit∂s#revenge#ii#-----Ω-----!-------4U#';
+  FP[2]:= ' P  π666666666666---------------------K------+ˆ-9999999999999#-#'; 
+  FP[3]:= '     66           -------Ω-----------≥9999999#####∫####5####-#2#';
+  FP[4]:= '     66 +Ù         ------------------------------------Ò##YYY#-#';
+  FP[5]:= '   ; 668888888888888888888888888888888888888ª------YY---##YYY#2#';
+  FP[6]:= '000~ 66---------------------------ııııııı---------------##YYY#-#';
+  FP[7]:= 'VVV~ 66-------------------------------------------------##YYY#B#';
+  FP[8]:= '-<-~ 66-------------------------------------------0----î##YYY#-#';
+  FP[9]:= '-[-~ 66---------.U.-----------------.ª.---------#####≥#-##YYY#2#';
+  FP[10]:='-|-~ 66----------------------------------------------≥#Y##YYY#-#';
+  FP[11]:='-"-~π --+++.+++.+++.+++.+++--------------------------≥#∫##KYÚ#2#';
+  FP[12]:='-í-~-7777777777777777777777777--###########----------≥#-##-###-#';
+  FP[13]:='---~662222222222222222222222266-DDVVLLLVVDD 2              2    ';
+  FP[14]:='ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ';
+  FP[15]:='#diary∑#day#six∏################################################';
+  FP[16]:='################################################################';
+  FP[17]:='#it∂s#becoming#more#and#more#difficult#to#survive√##the#idea#of#';
+  FP[18]:='################################################################';
+  FP[19]:='#turning#back#now#hangs#heavy#on#your#thoughts¥##how#much#can###';
+  FP[20]:='################################################################';
+  FP[21]:='#any#adventurer#take#before#adversity#wins¥##but#your#will#and##';
+  FP[22]:='################################################################';
+  FP[23]:='#courage#guide#you#now∑#and#they#refuse#to#let#you#give#up¥¥¥###';
+  Fast:=#234;{or #1}
+  Convert_Format;
+  GravOn:=true;GravRate:=0;Sideways:=true;
+ end; { Level66 }
+
+procedure Level68;
+ begin
+  FP[1]:= '--------I------:--"0|0[0<0--:----------------:------------------';
+  FP[2]:= 'ºYYYYYYYY------:--666666666Ω:----------Ω####-#LL-DDD------------';
+  FP[3]:= '---------------:------------:------Ω########-#9999999≥----------';
+  FP[4]:= '---------------:---------------Ω############≥########≥##--------';
+  FP[5]:= '---------------:--YYYYYYYYY-########C-;22;--]---------##--------';
+  FP[6]:= '-:----------Ú-----YYYYYYYYY-############################π::::::;';
+  FP[7]:= '-~≥~-~------U-----YYYYYYYYY-##--≥------------------------:------';
+  FP[8]:= '-~≥~-~------------YYYYKYYYY-##!##--------******0---------:------';
+  FP[9]:= '-~≥~9~------------ˆˆˆˆˆˆˆˆ--##-##YYYY::::YYYYYYYYYYYYYYY-------K';
+  FP[10]:='-~≥~í~----------------------##K##------------------------------U';
+  FP[11]:='º~-9-9-------------------------##VVVVVVVVVVVVVVVVVV##-----------';
+  FP[12]:='#########################piece#o∂#cake√##############4444444####';
+  FP[13]:='-: P :-------------------:-ªªªªªª--:----------------------------';
+  FP[14]:='-:   :-≥############MMMMM#-X77777#-#--≥88888#######0-----######∫';
+  FP[15]:='-:   :-≥-----------#MMMMM#-≥:::::#I#--≥--------0CC~------#Ò....-';
+  FP[16]:='-:   :-≥-----------#MMMMM#-X-----#-#--≥88888##5#########Y######-';
+  FP[17]:='-:   :-≥-----------#MMMMM#-≥-----#F#--≥-----##K##---------------';
+  FP[18]:='-:   :-≥-----------#MM∫MM#-X-]+++#Ù#--≥-----##Ω##               ';
+  FP[19]:='-:   :---ı---------#::::;#-≥-YYYY#;#--≥------                   ';
+  FP[20]:='T     -7777777777≥    2       -       2     -      2    -     2 ';
+  FP[21]:=';;;;;;;XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX;XXXXXXXX~~~~~~~XXXX';
+  FP[22]:='                                                        π       ';
+  FP[23]:='VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV#-#VVVVVV';
+  Fast:=#234;{or #1}
+  Convert_Format;
+  GravOn:=true;GravRate:=0;Sideways:=true;
+ end; { Level68 }
+
+procedure Level70;
+ begin
+  FP[1]:= '----------‡HT66-;K-XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX)-- 66111Ò111--';
+  FP[2]:= '-66666666666666-66))))))))))))))))))))))))))))))))66 6611111116-';
+  FP[3]:= '----------66----662222222222222222222222222222222266 6611111116ë';
+  FP[4]:= '66‡‡‡‡‡66-66-66-66((((((((((((((((((((((((((((((((66 66666-6666-';
+  FP[5]:= '661111166-66î66--(22222222222222222222222222222222--       YYÆ6<';
+  FP[6]:= '666666666-66-666666666666666666666666666666666666666 66666-66666';
+  FP[7]:= '----ï--------66666>;S---622222222222222222222222662YWY2666-66666';
+  FP[8]:= 'I6666666666666666666666-6@@@@@@@@@@@@@@@@@@@@@@@662YPY266W6666//';
+  FP[9]:= 'O:OO:::O:OO:66í-ñ-í66K@@@@                      662YWY26W666///\';
+  FP[10]:=':O::O:O:O::O66-LLL-666666@@@@@@@@@@@@@@@@@@@@   6666 666666//\"\';
+  FP[11]:=':::::O::::O:66DDDDD6666662222222222222222222@        66666//\\\\';
+  FP[12]:=':OOO::::O::O66DDDDD6666666666666666666666666666666666666///\\\\\';
+  FP[13]:='O:::O:OO:O:O664444466666666666666666666666666666---6666///\\\U\\';
+  FP[14]:=':O[66O66::O:6666666-1-1-1-1-1-1-1-1-1-1-1-1-1-1--U-666///\\\\\\\';
+  FP[15]:='RRRR6-6RRRRRRR6666666666666666666666666666666666---66////\\\\\\\';
+  FP[16]:='RRRR6-6RRRRRRRRRRRRRRRRRRRRRRRRRQX.X.X.X.X.X.X.X6666////\\\\\\\\';
+  FP[17]:='?]]66-66]]RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR66-66\';
+  FP[18]:='-------------------$$$$$$$$ïRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR6-6RR';
+  FP[19]:='$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ïRRRRR6-6RR';
+  FP[20]:='$W$W$W$W$W$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$66-66+';
+  FP[21]:='MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM';
+  FP[22]:='MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM';
+  FP[23]:='KMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM|MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM';
+  Fast:=#234;{or #1}
+  Convert_Format;
+ end; { Level70 }
+
+procedure Level72;
+ begin
+  FP[1]:= '----------------------?##2--------;;TTTT#-Ω-------º------ª------';
+  FP[2]:= '≥~~~~~~~~~~~~~~~~~~~~~-P##∫##############----------------------≥';
+  FP[3]:= '≥0-ØØØØØØØØØØØØØØØ-K# +##--:-ˆ;-&-í-î-ë-î----------------------≥';
+  FP[4]:= '≥###π################ ##----#mystery#ramp#----I----------------≥';
+  FP[5]:= '≥π##-82222222222228Q#  ##2----------ï---:-------|----[-----I---≥';
+  FP[6]:= '≥###-################  T##-############-:---"--------I---------≥';
+  FP[7]:= '≥2##-Y-Y-Y-Y;Y;Y;YCC# +##---D≥≥≥≥≥--.##ñ:-----------------<----≥';
+  FP[8]:= '≥###-################ ##---##VVVVV##-##-:----------------------≥';
+  FP[9]:= '≥2##-F‚;;***++++++‚2#  ##2-##-----##*##::-Ω-------º------ª-----≥';
+  FP[10]:='≥###-################  T##-##::::;##*##------------------------≥';
+  FP[11]:='≥2##-0-ñ-ñ-ñ-ñ-ñ-ñ-C# +##--##ì-!--##*##VVVVVVVVVVVVVVVVVVVVVV##≥';
+  FP[12]:='≥###-################ ##---#######-#-##########################≥';
+  FP[13]:='≥2##----2----2-----ì#  ##2-::C++++:-í-----7---D.##.------------≥';
+  FP[14]:='≥#################≥##  T##-::;:::##≥###########-##-#######99999≥';
+  FP[15]:='≥2##]-------;------ì# +##--:-------≥-##WWW------##-##88---#####≥';
+  FP[16]:='≥###-################ ##---:-≥≥≥≥≥≥≥-##########-##-##í#########≥';
+  FP[17]:='≥2##11111111111111-C#  ##2---Ø-----Y-:2222222222##K##-------88#≥';
+  FP[18]:='≥#########Y##########  T##---î-------#X###########X##########í#≥';
+  FP[19]:='≥2##-------ì## 8 2   -+##--::::-:::--#-----`--LL##---K---7----#≥';
+  FP[20]:='≥###-#########  ~00000##-------+-----#############---##########≥';
+  FP[21]:='≥2##Ò           ~      ##2--------------ë-ë-ë-ë-ë-ë------------≥';
+  FP[22]:='≥###            ~      T##X###########00XXXXXXXXXXXXXX---------≥';
+  FP[23]:='C2-2-2-2-2-2-2-2~ YYY-Æ44--‡‡‡‡‡M‡M∫##Ø-2222222222222XWWWWWWWWWW';
+  Fast:=#234;{or #1}
+  Convert_Format;
+  MagicEWalls:=true;
+  GravOn:=true;GravRate:=0;Sideways:=true;
+ end; { Level72 }
+
+procedure Level74;
+ begin
+  FP[1]:= '    0             #heat#wave√#    @ÚRRRRR22222222222222222244ñ`L';
+  FP[2]:= ';;===00  99999F                   @@@RRRRR2222222222222222244ñ::';
+  FP[3]:= '$===00   99ˆ99.             F  .      RRRRRR22222222222222244444';
+  FP[4]:= '$====00  99999        F .         îîî   RRRRR2222222222222222222';
+  FP[5]:= '$$====0            .    77777            RRRRRR22222222222222222';
+  FP[6]:= '$$$===00        F       77Ù77.    F     F RRRRRR2222222222222222';
+  FP[7]:= 'Ø$====0   F             77777            .  RRRRRR22222222222222';
+  FP[8]:= 'Ø=====00  $$$$$$$$$$$ F      F@@@@@@@@@      RRRRRR2222222222222';
+  FP[9]:= '====000   $222222222$         @2222222@   F    RRRRR222222222222';
+  FP[10]:='==000     ##############################        RRRRRR2222222222';
+  FP[11]:='00ñ ñ ñ ñZ##2-U-<##2-U-[##2-U-|##2-U-"##Z .   P   RRRRRR22222222';
+  FP[12]:='#############################################‡‡    RRRRRRR222222';
+  FP[13]:='K88------ë##ë-----88K##K88-----ë##ë-----88K##2‡ F    RRRRRRR2222';
+  FP[14]:='#########-##-##################-##-##########2‡   .    RRRRRRR22';
+  FP[15]:='2222222222222222222222222222222222222222222##2‡      F   RRRRRRR';
+  FP[16]:='2222222222222222222222222222222222222222222##2‡            RRRRR';
+  FP[17]:='2222222222222222222222222222222222222222222##‡‡  F       F   RRR';
+  FP[18]:='666666666666666666666666666666666666666666688        .     .    ';
+  FP[19]:=')))))))))))))))))))))))))))))))))))))))))))##5#######··      :  ';
+  FP[20]:='MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM##-:-í-:Û62·    :::  ';
+  FP[21]:='(((((((((((((((((((((((((((((((((((((((((((##-:-:-:‡#2· F ::>:: ';
+  FP[22]:='####-########################################-:-:-:-#2·    :;:  ';
+  FP[23]:='Ø00---22222222222222222-<[|"D-ë-D-ë-D-í-Òı!##-í-:-í-#2·    :   U';
+  Fast:=#234;{or #1}
+  Convert_Format;
+  HideMBlock:=true;
+ end; { Level74 }
+
+procedure Level75;
+ begin
+  FP[1]:= 'Òˆ22222229       &#the#sacred#chamber#of#kroz#&2      82222222ıÚ';
+  FP[2]:= 'ˆˆ22222999              $Æ$$$$$$$$$$$Ø$ 2    .        88822222ıı';
+  FP[3]:= '22222999     2  .   î   $$$333333333$$$              2  88822222';
+  FP[4]:= '222999   î   ###        $$3=========3$$   ]    ###        888222';
+  FP[5]:= '2999   .     #K#       $$3==˙˙˙˘˙˙˙==3$$       #Û# .        8882';
+  FP[6]:= '99      ]    #K#  2   $$3==˙˙˘VVV˘˙˙==3$$   2  #2#    î    2  88';
+  FP[7]:= 'RRRRRR       #0#      $3==˙˘Ô˙VAV˙Ô˘˙==3$      #2#        RRRRRR';
+  FP[8]:= '2222RR .     #0# .    $3==˙˘˘˙VVV˙˘˘˙==3$ .    #2#  2   . RR2222';
+  FP[9]:= '2222RR   2   #0#      $$3==˙˙˘˙6˙˘˙˙==3$$      #2#        RR2222';
+  FP[10]:='2222RR       #D#   2   $$3==˙˙˘0˘˙˙==3$$       #D#     2  RR2222';
+  FP[11]:='2222RR                  $$3==˙˙&˙˙==3$$                   RR2222';
+  FP[12]:='2222RR      2        ]   $3==˙˙G˙˙==3$    î    .   2   .  RR2222';
+  FP[13]:='2222RR   .     î     .   $$3==˙D˙==3$$                ]   RR2222';
+  FP[14]:='2222RR                    $$3=====3$$   2      2    î     RR2222';
+  FP[15]:='RRRRRR  2         2        $$33333$$       ]            2 RRRRRR';
+  FP[16]:='444444444444444í            $$$$$$$   .      .  H444444444444444';
+  FP[17]:='77777777777777###     .        P           2   ###YYYYYYYYYYYYYY';
+  FP[18]:='77777777777777#U#       2                      #U#YYXXXXXXXXXXXX';
+  FP[19]:='77777777777777#-#  2       .                   #0#YYXXYYYYYYYYYY';
+  FP[20]:='77777777777777#<#   ]          î 2       î    2#0#YYXXYYOOOOOOOO';
+  FP[21]:='77777777777777#[#        2  5555555       .    #0#YYXXYYOOYYYYYY';
+  FP[22]:='77777777777777#|#          55DDDDD55 2         #0#YYXXYYOOYYXXXX';
+  FP[23]:='K777777777777C#"#E  2     555D]!]D555     2    40#CYXXYYOOYYXX]K';
+  Fast:=#234;{or #1}
+  Convert_Format;
+  MagicEWalls:=true;HideCreate:=true;EvapoRate:=22;
+ end; { Level75 }
+
+BEGIN
+END.

@@ -1,0 +1,27 @@
+
+SLOW.COM
+	uses the timer click interupt to slow down the AT, it sets up a
+user routine to be called on each click (interupt 1Ch), the user routine
+just does a delay loop, interupts are enabled during the loop so interupt
+driven devices like the keyboard still work, but the machine seems to be
+slowed down (even though it's running at full speed with just a lot of idle
+time). I set the values in the delay loop to come reasonably close to the
+speed of a normal PC. SLOW.COM will only work with programs that run under
+dos and do not disable the timer interupt or the user vector for timer.
+
+NOSLOW.COM
+	revectors the user vector for timer back to the IRET in the bios so
+that the AT runs at full speed again.
+
+
+
+
+When I get an AT tech ref I will put together a SLOW.COM that works with just
+about anything.
+
+
+John Bridges
+
+
+Courtesy of: The Consultants' Exchange, PO Box 12100, Santa Ana, CA 92712
+                ( 7 1 4 )   8 4 2 - 6 3 4 8      24 hours

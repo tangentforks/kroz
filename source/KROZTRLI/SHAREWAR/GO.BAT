@@ -1,0 +1,2 @@
+cls
+list readme.txt

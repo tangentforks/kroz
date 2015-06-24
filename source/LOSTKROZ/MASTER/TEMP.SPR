@@ -1,0 +1,5 @@
+
+     if Slow   = #142 then Slow   := #143 else Slow   := #142;
+					if Medium = #153 then Medium := #148 else Medium := #153;
+					if Fast   = #239 then Fast   := #234 else Fast   := #239;
+

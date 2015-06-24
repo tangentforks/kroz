@@ -1,0 +1,783 @@
+{//-------------------------------------------------------------------------}
+{/*                                                                         }
+{Copyright (C) 1987, 2009 - Apogee Software, Ltd.                           }
+{                                                                           }
+{This file is part of Kroz. Kroz is free software; you can redistribute it  }
+{and/or modify it under the terms of the GNU General Public License         }
+{as published by the Free Software Foundation; either version 2             }
+{of the License, or (at your option) any later version.                     }
+{                                                                           }
+{This program is distributed in the hope that it will be useful,            }
+{but WITHOUT ANY WARRANTY; without even the implied warranty of             }
+{MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.                       }
+{                                                                           }
+{See the GNU General Public License for more details.                       }
+{                                                                           }
+{You should have received a copy of the GNU General Public License          }
+{along with this program; if not, write to the Free Software                }
+{Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.}
+{                                                                           }
+{Original Source: 1987-1990 Scott Miller                                    }
+{Prepared for public release: 03/19/09 - Joe Siegler, Apogee Software, Ltd. }
+{*/                                                                         }
+{//-------------------------------------------------------------------------}
+{*** RETURN TO KROZ levels are defined here.  By Scott Miller 07/29/89 ***}
+
+unit Return;
+
+interface 
+
+const Bottom   = 20;  {1472 objects max. / play field }
+      XBot     = 2;
+      XTop     = 65;
+      YBot     = 2;
+      YTop     = 24;
+      Null     = 0;
+      YSize    = 23;
+      XSize    = 64;
+      TMax     = 9;
+
+
+type  Field    = string[192];
+      StrXSize = string[XSize];
+
+var   DF       : array [1..Bottom] of Field;
+      PF       : array [1..66,1..25] of byte;
+      FP       : array [1..YSize] of StrXSize;
+      BX, BY   : array [1..1300] of byte;
+      SX, SY,
+      MX, MY,
+      FX, FY   : array [1..1000] of byte;
+      T        : array [1..TMax] of longint; { 1=Slow, 2=Medium, 3=Fast }
+      ch,                                    { 4=SlowTime, 5=invisible  }
+      Slow,                                  { 6=SpeedTime, 7=Freeze    }
+      Medium,                                { 8=MBlock, 9=Statue       }
+      Fast     : char; 
+      x,y,i,                                 
+      PX, PY,                                
+      GenNum,
+      BNum,
+      SNum,
+      MNum,
+      FNum,
+      LavaRate,     { 10=slow, 90=fast }
+      GemColor,
+      ArtColor : integer;
+      FastPC,
+      LavaFlow,
+      Color    : boolean;
+
+procedure ClearKeys;
+procedure Cur(Num:byte);
+procedure Sign_Off;
+procedure Col(Num1,Num2:byte);
+procedure Bak(Num1,Num2:byte);
+procedure Bor(Num:byte);
+procedure Shareware(Wait: boolean);
+procedure New_Gem_Color;
+procedure Level1;
+procedure Level3;
+procedure Level5;
+procedure Level7;
+procedure Level9;
+procedure Level11;
+procedure Level13;
+procedure Level15;
+procedure Level17;
+procedure Level19;
+procedure Level20;
+procedure Define_Levels;
+procedure FootStep;
+procedure GrabSound;
+procedure NoneSound;
+procedure BlockSound;
+procedure Static;
+
+implementation { ---------------------------------------------------------- }
+
+uses Turbo3, CRT, DOS;
+
+procedure ClearKeys;
+ begin
+  while keypressed do read(kbd,ch);
+ end;
+
+procedure Cur(Num:byte);
+ var Result : Registers;
+ begin
+  Result.AX := $100;
+  with Result do
+   if Color then
+    case Num of
+     1:CX:=$707;   { Underline   }
+     2:CX:=$8;     { Solid Block }
+     3:CX:=$2000;  { Invisible   }
+    end
+   else
+    case Num of
+     1:CX:=$C0D;
+     2:CX:=$E;
+     3:CX:=$2000;
+    end;
+   intr($10,Result);
+ end; { Cur }
+
+procedure FootStep;
+  var x:integer;
+ begin
+  for x:=1 to ord(FastPC)*50+ord(not FastPC)*23 do sound(random(550)+350);
+  nosound;delay(120);
+  for x:=1 to ord(FastPC)*60+ord(not FastPC)*30 do sound(random(50)+150);
+  nosound;
+ end;
+
+procedure GrabSound;
+  var x:integer;
+ begin
+  for x:=1 to ord(FastPC)*160+ord(not FastPC)*65 do
+   sound(random(1000)+1000);nosound
+ end;
+
+procedure BlockSound;
+  var x:integer;
+ begin
+  for x:= 60 downto 30 do begin sound(x);delay(1+ord(FastPC)*2);end;
+  nosound;
+ end;
+
+procedure NoneSound;
+  var x:integer;
+ begin
+  for x:=1 to 5 do
+   begin
+    sound(400);delay(10);nosound;delay(10);
+    sound(700);delay(10);nosound;delay(10);
+   end;
+ end;
+
+procedure Static;
+  var x,y:integer;
+ begin for x:= 1 to 15 do bor(random(16));bor(4);
+  for x:=1 to 33 do
+   case random(2) of
+    0:for y:=1 to random(60)+10 do sound(random(4000)+3000);
+    1:begin nosound;delay(random(30)); end;
+   end; nosound;
+ end; { Static }
+
+procedure Col(Num1,Num2:byte);
+ begin if Color then textcolor(Num1) else textcolor(Num2) end;
+
+procedure Bak(Num1,Num2:byte);
+ begin if Color then textbackground(Num1) else textbackground(Num2) end;
+
+procedure Bor(Num:byte);
+ var Result : Registers;
+ begin
+  if Color then
+    begin
+      with Result do begin AX:=$B00;BX:=Num; end;
+      intr($10,Result);
+    end;
+ end;
+
+procedure Sign_Off;
+ begin
+  Shareware(false);
+  ClearKeys;
+  col(7,7);
+  bor(0);
+  bak(0,0);
+  clrscr;
+  gotoxy(33,1);write('RETURN TO KROZ');
+  gotoxy(26,2);writeln('An Apogee Software Production');
+  writeln;
+  writeln('Other new games available from Scott Miller:');
+  writeln;
+  writeln('* SUPERNOVA -- An epic adventure, with 16 colors, graphics and sound effects.');
+  writeln('     Spans an entire galaxy.  Game takes up an entire disk!  ($10)');
+  writeln;
+  writeln('* BEYOND THE TITANIC -- A fantastic adventure of exploration and survival.');
+  writeln('     What really happened?  Sound effects and 16 color screens.  ($8)');
+  writeln;
+  writeln('* TREK TRIVIA -- VOLUMES 1 through 10 -  Each volume has 100 Star Trek trivia');
+  writeln('     questions, and is played like a game.  16-colors and sound effects, too.');
+  writeln('     $4 per volume (plus $2 per order for postage and disks), order all 10');
+  writeln('     volumes and pay only $30, a $12 savings!');
+  writeln;
+  writeln('* Five more Kroz games!  KINGDOM OF KROZ, CAVERNS OF KROZ, DUNGEONS OF KROZ,');
+  writeln('     TEMPLE OF KROZ and THE LAST CRUSADE OF KROZ.  Each $7.50, or order all');
+  writeln('     six for $35!  This is the most popular game series in shareware.');
+  writeln;
+  writeln('* THE LOST ADVENTURES OF KROZ -- 75 all-new levels packed with new features.');
+  writeln('     The ultimate Kroz game with unique twists.  ($20 + $2 Shipping & Disk)');
+  cur(1);
+  ClearKeys;
+  HALT;
+ end; { Sign_Off }
+
+procedure Shareware(Wait: boolean);
+ begin
+  bak(1,0);bor(1);clrscr;cur(3);col(15,15);
+  gotoxy(24,1);
+  writeln('RETURN TO KROZ Ä HOW TO REGISTER');
+  gotoxy(1,2);
+  for x:=1 to 80 do write('Ä');
+  gotoxy(1,3);
+  col(7,7);
+  writeln('  This is Volume I of the Super Kroz Trilogy.  Return to Kroz is a shareware');
+  writeln('game, which means it is user supported.  If you enjoy this game you are asked');
+  writeln('by the author to please send an appreciation check of $7.50 to Apogee Software.');
+  writeln('This minimal amount will help compensate the many months of work that went into');
+  writeln('the creation of this game.');
+  writeln('  Also, this registration fee will allow you to order the two non-shareware');
+  write  ('sequels:  ');col(15,9);
+  write  ('Temple of Kroz');col(7,7);
+  write  (' (Volume II) and ');col(15,9);
+  write  ('The Last Crusade of Kroz');col(7,7);
+  writeln(' (Volume III).');
+  writeln('Each sequel can be ordered for $7.50 each, or all three for $20.  Registered');
+  writeln('players will also get a secret code that makes this game easier to complete,');
+  writeln('plus a "Hints, Tricks and Scoring Secrets" guide and "The Domain of Kroz" map.');
+  writeln('  The three original Kroz games are also available and have been updated with');
+  write  ('improved features.  All three of the original Kroz games (');col(15,9);
+  write  ('Kingdom of Kroz');col(7,7);
+  writeln(',');col(15,9);
+  write  ('Caverns of Kroz');col(7,7);
+  write  (', ');col(15,9);
+  write  ('Dungeons of Kroz');col(7,7);
+  writeln(') are $7.50 each or $15 for all three. Kingdom');
+  writeln('of Kroz recently won "Best Game" in a national contest.  These first three');
+  writeln('Kroz games feature 95 new levels to explore.');
+  writeln;
+  write('Please make checks payable to:');
+  col(14,7);
+  writeln('   Apogee Software    (phone: 214/240-0614)');gotoxy(31,20);
+  writeln('   4206 Mayflower');gotoxy(31,21);
+  writeln('   Garland, TX 75043');
+  writeln;
+  col(7,7);
+  writeln('Thank you and enjoy the game.  -- Scott Miller (author)');
+  if Wait then delay(3333);
+  bak(random(6)+1,7);
+  gotoxy(1,25);
+  insline;
+  gotoxy(27,25);
+  col(16,16);
+  write('Press any key to continue.');
+  for x:=70 downto 10 do
+   for y:=2 to 12 do
+    begin sound(x*y);delay(1);end;nosound;
+  ClearKeys;
+  repeat x:=random(maxint) until keypressed;
+  ClearKeys;
+  bak(0,0);bor(4);clrscr;cur(3);
+ end; { Shareware }
+
+procedure New_Gem_Color;
+ begin
+  repeat
+   GemColor:=random(15)+1;
+   if not Color then GemColor := 7;
+  until GemColor <> 8;
+  repeat
+   ArtColor:=random(15)+1;
+  until (ArtColor<>8) and (ArtColor<>GemColor);
+  if not Color then ArtColor := 7;
+ end;
+
+procedure Define_Levels;
+ begin
+{ Levels 1,3,5,7,9,11,13,15,17,19,20 are pre-defined }
+
+DF[2]:=
+{  1  2  3  X  W  L  C  S  +  I  T  K  D  #  F  .  R  Q  /  \  B  V  =  A  U  Z  *  E  ;  :  `  -  @  %  ]  G  (  M  )}
+'150 10   100  9  2  1  2  9     1             15                                9  1         100                     '+
+{  P  &  !  O  H  ?  >  N  <  [  |  "  4  5  6  7  8  9  ñ  ò  ó  ô  õ  ö  Y}
+'                                                                           ';
+
+DF[4]:=
+{  1  2  3  X  W  L  C  S  +  I  T  K  D  #  F  .  R  Q  /  \  B  V  =  A  U  Z  *  E  ;  :  `  -  @  %  ]  G  (  M  )}
+'   333       55  3  1  4 40 40  5       40  1  5                                              70280         280   280'+
+{  P  &  !  O  H  ?  >  N  <  [  |  "  4  5  6  7  8  9  ñ  ò  ó  ô  õ  ö  Y}
+'                                                                           ';
+
+DF[6]:=
+{  1  2  3  X  W  L  C  S  +  I  T  K  D  #  F  .  R  Q  /  \  B  V  =  A  U  Z  *  E  ;  :  `  -  @  %  ]  G  (  M  )}
+'         999 35  3       30 10     2           5                                                                     '+
+{  P  &  !  O  H  ?  >  N  <  [  |  "  4  5  6  7  8  9  ñ  ò  ó  ô  õ  ö  Y}
+'                                                                           ';
+
+DF[8]:=
+{  1  2  3  X  W  L  C  S  +  I  T  K  D  #  F  .  R  Q  /  \  B  V  =  A  U  Z  *  E  ;  :  `  -  @  %  ]  G  (  M  )}
+'999          65  3  1  9                                                     7  5             30                     '+
+{  P  &  !  O  H  ?  >  N  <  [  |  "  4  5  6  7  8  9  ñ  ò  ó  ô  õ  ö  Y}
+'                                                                           ';
+
+DF[10]:=
+{  1  2  3  X  W  L  C  S  +  I  T  K  D  #  F  .  R  Q  /  \  B  V  =  A  U  Z  *  E  ;  :  `  -  @  %  ]  G  (  M  )}
+'165130104999 25  1  1    15     2              9                                                                     '+
+{  P  &  !  O  H  ?  >  N  <  [  |  "  4  5  6  7  8  9  ñ  ò  ó  ô  õ  ö  Y}
+'                       5                                                   ';
+
+DF[12]:=
+{  1  2  3  X  W  L  C  S  +  I  T  K  D  #  F  .  R  Q  /  \  B  V  =  A  U  Z  *  E  ;  :  `  -  @  %  ]  G  (  M  )}
+'   700           2     2 40 50              3  2                                9            495 50          50    50'+
+{  P  &  !  O  H  ?  >  N  <  [  |  "  4  5  6  7  8  9  ñ  ò  ó  ô  õ  ö  Y}
+'                          1  1  1  1                                       ';
+
+DF[14]:=
+{  1  2  3  X  W  L  C  S  +  I  T  K  D  #  F  .  R  Q  /  \  B  V  =  A  U  Z  *  E  ;  :  `  -  @  %  ]  G  (  M  )}
+'        2        1  1      400               999                                5  5                            50   '+
+{  P  &  !  O  H  ?  >  N  <  [  |  "  4  5  6  7  8  9  ñ  ò  ó  ô  õ  ö  Y}
+'                                                                           ';
+
+DF[16]:=
+{  1  2  3  X  W  L  C  S  +  I  T  K  D  #  F  .  R  Q  /  \  B  V  =  A  U  Z  *  E  ;  :  `  -  @  %  ]  G  (  M  )}
+'150           9  1  2                          2     1        2   200     5    50  1                 2 80  3    90   '+
+{  P  &  !  O  H  ?  >  N  <  [  |  "  4  5  6  7  8  9  ñ  ò  ó  ô  õ  ö  Y}
+'     5   200  4  1  1     1  1  1  1 50                 2                  ';
+
+DF[18]:=
+{  1  2  3  X  W  L  C  S  +  I  T  K  D  #  F  .  R  Q  /  \  B  V  =  A  U  Z  *  E  ;  :  `  -  @  %  ]  G  (  M  )}
+'         999     1                                   1        1           3    25 15                   50  2    80   '+
+{  P  &  !  O  H  ?  >  N  <  [  |  "  4  5  6  7  8  9  ñ  ò  ó  ô  õ  ö  Y}
+'    10    80     1    12  1  1  1  1                                       ';
+
+ end; { Define_Levels }
+
+procedure Convert_Format;
+  var XLoop,
+      YLoop  : integer;
+      tempstr: string[1];
+ begin
+  SNum:=Null; MNum:=Null; FNum:=Null; BNum:=Null; GenNum:=Null;
+  T[9]:=-1; LavaFlow:=false;
+  for x:=1 to 66 do for y:=1 to 25 do PF[x,y]:=0;
+  for x:=1 to 999 do
+   begin                        {* reset monster's X, Y *}
+    BX[x]:=0;BY[x]:=0;
+    SX[x]:=0;SY[x]:=0;
+    MX[x]:=0;MY[x]:=0;
+    FX[x]:=0;FY[x]:=0;
+   end;
+  New_Gem_Color;
+  for YLoop:=1 to YSize do
+   for XLoop:=1 to XSize do
+    begin
+    tempstr := copy(FP[YLoop], XLoop, 1);
+    case char(tempstr[1]) of
+     ' ':PF[XLoop+1,YLoop+1]:=Null;
+     '1':begin
+          SNum:=SNum+1;SX[SNum]:=XLoop+1;SY[SNum]:=YLoop+1;
+          PF[XLoop+1,YLoop+1]:=1;
+         end;
+     '2':begin
+          MNum:=MNum+1;MX[MNum]:=XLoop+1;MY[MNum]:=YLoop+1;
+          PF[XLoop+1,YLoop+1]:=2;
+         end;
+     '3':begin
+          FNum:=FNum+1;FX[FNum]:=XLoop+1;FY[FNum]:=YLoop+1;
+          PF[XLoop+1,YLoop+1]:=3;
+         end;
+     'X':PF[XLoop+1,YLoop+1]:=4;
+     'W':PF[XLoop+1,YLoop+1]:=5;
+     'L':PF[XLoop+1,YLoop+1]:=6;
+     'C':PF[XLoop+1,YLoop+1]:=7;
+     'S':PF[XLoop+1,YLoop+1]:=8;
+     '+':PF[XLoop+1,YLoop+1]:=9;
+     'I':PF[XLoop+1,YLoop+1]:=10;
+     'T':PF[XLoop+1,YLoop+1]:=11;
+     'K':PF[XLoop+1,YLoop+1]:=12;
+     'D':PF[XLoop+1,YLoop+1]:=13;
+     '#':PF[XLoop+1,YLoop+1]:=14;
+     'F':PF[XLoop+1,YLoop+1]:=15;
+     '.':PF[XLoop+1,YLoop+1]:=16;
+     'R':PF[XLoop+1,YLoop+1]:=17;
+     'Q':PF[XLoop+1,YLoop+1]:=18;
+     '/':PF[XLoop+1,YLoop+1]:=19;
+     '\':PF[XLoop+1,YLoop+1]:=20;
+     'B':PF[XLoop+1,YLoop+1]:=21;
+     'V':PF[XLoop+1,YLoop+1]:=22;
+     '=':PF[XLoop+1,YLoop+1]:=23;
+     'A':PF[XLoop+1,YLoop+1]:=24;
+     'U':PF[XLoop+1,YLoop+1]:=25;
+     'Z':PF[XLoop+1,YLoop+1]:=26;
+     '*':PF[XLoop+1,YLoop+1]:=27;
+     'E':PF[XLoop+1,YLoop+1]:=28;
+     ';':PF[XLoop+1,YLoop+1]:=29;
+     ':':PF[XLoop+1,YLoop+1]:=30;
+     '`':PF[XLoop+1,YLoop+1]:=31;
+     '-':PF[XLoop+1,YLoop+1]:=32;
+     '@':PF[XLoop+1,YLoop+1]:=33;
+     '%':PF[XLoop+1,YLoop+1]:=34;
+     ']':PF[XLoop+1,YLoop+1]:=35;
+     'G':begin PF[XLoop+1,YLoop+1]:=36;GenNum:=GenNum+1;end;
+     '(':PF[XLoop+1,YLoop+1]:=37;
+     'M':begin
+          BNum:=BNum+1;BX[BNum]:=XLoop+1;BY[BNum]:=YLoop+1;
+          PF[XLoop+1,YLoop+1]:=38;
+         end;
+     ')':PF[XLoop+1,YLoop+1]:=39;
+     'P':begin PF[XLoop+1,YLoop+1]:=40;PX:=XLoop+1;PY:=YLoop+1;end;
+     '&':PF[XLoop+1,YLoop+1]:=41;
+     '!':PF[XLoop+1,YLoop+1]:=42;
+     'O':PF[XLoop+1,YLoop+1]:=43;
+     'H':PF[XLoop+1,YLoop+1]:=44;
+     '?':PF[XLoop+1,YLoop+1]:=45;
+     '>':begin PF[XLoop+1,YLoop+1]:=46;T[9]:=32000;end; 
+     'N':PF[XLoop+1,YLoop+1]:=47;
+     '<':PF[XLoop+1,YLoop+1]:=48;
+     '[':PF[XLoop+1,YLoop+1]:=49;
+     '|':PF[XLoop+1,YLoop+1]:=50;
+     '"':PF[XLoop+1,YLoop+1]:=51;
+     '4':PF[XLoop+1,YLoop+1]:=52;
+     '5':PF[XLoop+1,YLoop+1]:=53;
+     '6':PF[XLoop+1,YLoop+1]:=54;
+     '7':PF[XLoop+1,YLoop+1]:=55;
+     '8':PF[XLoop+1,YLoop+1]:=56;
+     '9':PF[XLoop+1,YLoop+1]:=57;
+     'ñ':PF[XLoop+1,YLoop+1]:=58;
+     'ò':PF[XLoop+1,YLoop+1]:=59;
+     'ó':PF[XLoop+1,YLoop+1]:=60;
+     'ô':PF[XLoop+1,YLoop+1]:=61;
+     'õ':PF[XLoop+1,YLoop+1]:=62;
+     'ö':PF[XLoop+1,YLoop+1]:=63;
+     'Y':PF[XLoop+1,YLoop+1]:=64
+     else
+      begin
+       tempstr := copy(FP[YLoop], XLoop, 1);
+       PF[XLoop+1,YLoop+1]:=ord(char(tempstr[1]));
+      end;
+    end;
+    end;
+ end; { Convert_Format }
+
+procedure Level1;
+ begin
+  FP[1]:= '1     1                  1     1    +    1    +                1';
+  FP[2]:= ' +                   +                          1   +   1   +   ';
+  FP[3]:= '       6666-6666                    ##########################  ';
+  FP[4]:= '       66*T*T*66       1       +  1 ##1111111111111111111111##1 ';
+  FP[5]:= '    +  66T*T*T66 +                  ##----------------------##  ';
+  FP[6]:= '  1    666666666         +          ##XXXXX#############  XX## +';
+  FP[7]:= '                    1           1   ##8888888888888õK.##  XZ##  ';
+  FP[8]:= '       1                            ####################  XX##+ ';
+  FP[9]:= '                  +                        1    77ô##)))))))##  ';
+  FP[10]:='##### 1    RRRRR            1      1            777##W##1)))## 1';
+  FP[11]:='C::##       &RRRRR   1              +              ##W##)))1##  ';
+  FP[12]:=':-:##       RRRRR              P                   ##W##1)))## +';
+  FP[13]:='::-## 1      RRR                    1          1  +##W##)1))##  ';
+  FP[14]:=':-:##      +               1               +       ##W##)))1##+ ';
+  FP[15]:=':-:##    1         1                            1  ##W##1)))##  ';
+  FP[16]:='-::##                             ######D##     +  ##W##))1)##1 ';
+  FP[17]:='XXX##  +              1         1 ##-----##1       #####))))##  ';
+  FP[18]:='           1               1    + ##--#######    1              ';
+  FP[19]:='                1                 ##-------#####################';
+  FP[20]:='1      ########################D#########-1##------1---+--1-&-LL';
+  FP[21]:='XXXXXXX##T77##77777717777##-----##---------##-##################';
+  FP[22]:='XXXXXXX##777##7777##777777@@@@@@##1-#########D##return#to#kroz##';
+  FP[23]:='WWWWWWW##KK7771777##77W77##11111##------!-----##by#scott#miller#';
+  Slow:=#142;{or #154} Medium:=#153;{or #148} Fast:=#234;{or #1}
+  Convert_Format;
+ end; { Level1 }
+
+procedure Level3;
+ begin
+  FP[1]:= 'OOOO<OOOO[OOOO|OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-11111-OOOO';
+  FP[2]:= '  #############################################################O';
+  FP[3]:= '   T 1111111 T        ---##1      1##CC33333333333333       +##O';
+  FP[4]:= '  #############      ##++## -  1 - ###################       ##O';
+  FP[5]:= '                     ##  ## 1 -   1XXXXXXXXXXXXXXXXXXX       ##O';
+  FP[6]:= '#######################  ## -    -                           ##O';
+  FP[7]:= '!CX)XTXWXWXWXWXWXWXWXWX            YYYYYYYYYYYYYYYYYYY       ##O';
+  FP[8]:= '66666666666666666666666666666666666666666666666666666666666--##O';
+  FP[9]:= 'I-662-----662-66-W66-266-2662----266C266--662----W662-----2--##O';
+  FP[10]:='K-66--66----------66------66--66--66--66------66--66--66-----##O';
+  FP[11]:='I-2---662-66-W662-----66W-----662---------66W-662-----662----##O';
+  FP[12]:='66666666666666666666666666666666666666666666666666666666666--##O';
+  FP[13]:='  -@1@1@11@1@1@11@1-"6H66+++++++66 1   1 1 1 1 1  1 1   )    ##O';
+  FP[14]:=' 6-@@1@@@1@11@1@@1@--6T661  1  166   1  1 1   1 1       )##**##O';
+  FP[15]:=' 6-@1@1@11@@1@1@11@1@6-66       661  1 1  1 1         )))##11##O';
+  FP[16]:=' 6-@11@1@1@1@1@11@1@@6-66  YYY  66  1    1  1 1     )))2)##11##O';
+  FP[17]:=' 6-@@@1@1@11@11@1@@116-661 YPY 166 1  11 1        ))))2))##11##O';
+  FP[18]:=' 6-@C@11@1@@11@1@1@1@6-66  YYY  66  1  1        ))))2)2)T##11##O';
+  FP[19]:=' 6-6666666666666666666-66       661 1         ))))2########11##O';
+  FP[20]:=' 6---------------------661  1  166666       ))))2))##2222##11##O';
+  FP[21]:=' 666666666666666666666666-------66S66     )))2)))2)##2222##1Q##O';
+  FP[22]:='  2********             (((((((((        ----------##----######O';
+  FP[23]:='+YYYYYYYYYYYYYYYYYYYYYY661+1+1+166                 ------X++++DL';
+  Slow:=#154; Medium:=#148; Fast:=#234;
+  Convert_Format;
+ end; { Level3 }
+
+procedure Level5;
+ begin
+  FP[1]:= '2222222222222222222222222222222222222222222222222222222222222222';
+  FP[2]:= '@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@';
+  FP[3]:= '### =======&      ##*2      2 *    2   I*    I2  I   I I        ';
+  FP[4]:= 'L##   K=========  ##   2  -----------I    I  I I   I ((## ##### ';
+  FP[5]:= '&## =========+    ##     --XXXXXXXXX-- 2 I  I   I I2 (2## ##?##.';
+  FP[6]:= 'D##   +========== ##  *  -XXXXXXXXXXX-     I II *I II(2##;##@##.';
+  FP[7]:= 'D##  ==========+  ##     -XXXXXXXXXXX-  I I    I I I (2##C##;##.';
+  FP[8]:= 'D##               ## 2   -XXXXXXXXXXX-I   * I  II I *(2## ## ##.';
+  FP[9]:= '2## ################    --XXXXXKXXXXX-  I I   I  I I2(2## ## ##.';
+  FP[10]:='C##  *)22222222222) * 2--XXXXXXXXXXXXX--   I I  I    (2##2## ##*';
+  FP[11]:='2##   )))))))))))))   --XXXXXXXXXXXXXXX--*  2 I 2 I I((##### ##*';
+  FP[12]:='C###        *         -XXXXXXXXXXXXXXXXX-            *   2   ##*';
+  FP[13]:='2#t#2         )))))*))))XXX#########XXX--      *           * ##*';
+  FP[14]:='W#o#                   --XX##WWCWW##XX--   *     2    *      ##*';
+  FP[15]:='W#o#    * 2             --X####X####X--       *           *  ##*';
+  FP[16]:='W###              *          ## ##              ---2   *   W2##2';
+  FP[17]:='W#h#       *       99999999999# #99999999999    -ö############# ';
+  FP[18]:='W#o#    2 ############    V V    VV V    ###########K....   ... ';
+  FP[19]:='W#t#      #2           * VVVVV P  VVVV           2## ... ... .. ';
+  FP[20]:='X###      #-#-#-#-#-#-   VVVVVV!VVVVV*   -#-#-#-#-##.  .. .. . .';
+  FP[21]:='X##       #W#W#W#W#W#W  VVVVVVVVVVVVVVV  W#W#W#W#W####. .. . .. ';
+  FP[22]:='X##2      #W#W#W#W#W#W ####VVVVVVVVV#### W#W#W#W#W W## .. ... . ';
+  FP[23]:='        2 #W#W#W#W#W#W#########?#########W#W#W#W#W#W##     I.. .';
+  Slow:=#142; Medium:=#153; Fast:=#234;
+  Convert_Format;
+  LavaFlow:=true; LavaRate:=110;
+ end; { Level5 }
+
+procedure Level7;
+ begin
+  FP[1]:= 'H------OOOOOOOOOOOOOOOOOOOQMMMMMMMMMM*****MMMMMMMMMMMMMMMMXX##DL';
+  FP[2]:= '---P---MMM<MMMMMMMMMMMMMMMMMMMMMMMMMM*****MMMMM"MMMTTMMMMMXX#D##';
+  FP[3]:= '-------MMMMMMMMMMMMMMMMMMMMMMMMMMMMMM*****MMMMMMMMMTTMMMMMXXD###';
+  FP[4]:= 'MM-MMMMMMMMMMMMMMMMM?MMMMMMMMMMMMMMMMMM)MMMMMMMMMMMMMMMMMMXXXXXX';
+  FP[5]:= 'MM-MMMMMMMMMMMMMMMMMMM---MMMMMMMMMMMMMM)MMMMMMMMMMMMMMMMMMXXXXXX';
+  FP[6]:= 'MM-MMMM------MMMMMMM-MMM-MMMMMMMMMMMMMM----------------MMMMMMMMM';
+  FP[7]:= 'MM-MMM-MMMMM-MMMMMMM-MMM-MMMMWWWMMMMMMMMMMMMMMMMMMMMMM----------';
+  FP[8]:= 'MM-MMMM-MMMM-MMMMMMMMMMMBMMMMWWWMMMMMMMMMMMMMMMMMMMMMM-MMMMMMMMM';
+  FP[9]:= 'MM-MMM-MMMMMWMMMMMMM-MMMMMMMMWWWMMMMMMMMMMMMMMMMMMMMMM-MMMWWWMMM';
+  FP[10]:='WM-MMMM-MMMM-MMMMMMM-MMMMMMMMMMMMMMMM----MM----MMMMMMM-MMMWWWMMM';
+  FP[11]:='WM-MMM-MMMMM-MMMMMMM-MMMMMMMMMMMMMMMM-MM-MM-MM-MMMMMMM-MMMMMMMMM';
+  FP[12]:='WM-MMM-MMMMM-MMMMMMMMMMMMMMMMMMMMMMMM-MM-MM-MM-MMM|MMM----------';
+  FP[13]:='WMWMMM-MMMMM--------------------------MM----MM-MMMMMMMM-MMMMMMM-';
+  FP[14]:='WM-MMM-MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM--MMMMMMM-MMMCMMM-';
+  FP[15]:='WM-MMM-MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM-MMMMMMM-MM-MMMM-';
+  FP[16]:='WM-MMM-----------------------------------W--MMM-----MMM-M-MMMMM-';
+  FP[17]:='MM-MMMMMMMMM-MMMM-MMMMMMMMMMMMMMMMMMMMMMMMM-MMMMMMM-MMM--MMMMM-M';
+  FP[18]:='MM-MMMMMMMMM-MMMM+MMMMMMMMMMMMMMMMMMMMMMMMM-MMMMMMM-MMMMMMMMM-MM';
+  FP[19]:='MM---MMMMMMM!MMMMMMMMMMMWWWWWWWW@-------MMM-MMM-----MMMMMMMM-MMM';
+  FP[20]:='MMMMM--MMMMMMMMMMMMMMMMMMMMMMMMMMMM-MMM-MM--MMM-MMMMMMMMMMM-MMMM';
+  FP[21]:='MMMMMMM--MMMMMMMMM------------------MMM-MM-MMMM-MMMMMMMMMM-MMMMM';
+  FP[22]:='MMMMMMMMM--MM--MM-M@@@@@@@@@@@@@@@MMMMM-M-MMMMM---M-M-M-M-MMM---';
+  FP[23]:='[MMMMMMMMMM--MM--MM@2222222222222@MMMMM---MMMMMMMM-M-M-M-MMMM--K';
+  Slow:=#142; Medium:=#148; Fast:=#234;
+  Convert_Format;
+  T[8]:=75;
+ end; { Level7 }
+
+procedure Level9;
+ begin
+  FP[1]:= 'K                  H66        ]]DWDWD&L66                      !';
+  FP[2]:= '     *********      66 66666 666666666666                     6O';
+  FP[3]:= '    *VVVVVVVVV*     66 66?66                ////////          6O';
+  FP[4]:= '   *VVVVVVVVVVV*    66 66&66          /////////\////////      6O';
+  FP[5]:= '    **VVVVVV***     66 66C66       //////\\\\\\\\//\///////   6"';
+  FP[6]:= '      ******  [     66]66]66    //////\/\\\%\\%\\/////Tõ8     6O';
+  FP[7]:= 'C                      66]66     7ôT////\\\\\\\\///\/////     6O';
+  FP[8]:= '6666666666666666666666666 66   //////\////\\////////////     R6O';
+  FP[9]:= '&------M@M@M@M@M@M@M@             ////////////\//          RRR6O';
+  FP[10]:='6666666666666666666666                   //////          RRRRR6O';
+  FP[11]:='K       ]=====+ ]====]                                 RRRR2-|6O';
+  FP[12]:='   ====+         +====      66666666666              RRRR222--6O';
+  FP[13]:='    +=====  ]==             66222222266    W       RRRR22222226O';
+  FP[14]:='+==]      +====+ ====       66-------66         66RRR6622222226O';
+  FP[15]:='====   ======]              ---Y-Y-YC66         666666222222226O';
+  FP[16]:='+==           +=====+       66-------66            --2222222226O';
+  FP[17]:='    +====+   ====+====      66222222266       66666662222222226O';
+  FP[18]:=']  =======                  66666666666       66RRR662222222226O';
+  FP[19]:='    +      ]====< +====                 Z6666;666RRR622222222K6O';
+  FP[20]:=']]66666666666666666666666666666666666666666+WKW+666666666666666O';
+  FP[21]:='                      TTTTTT222222222222222222222222222222222C6O';
+  FP[22]:=' F6666666666666666666666666666666666666666666666666666666666666C';
+  FP[23]:='P                                                          ] ?6C';
+  Slow:=#154; Medium:=#153; Fast:=#234;
+  Convert_Format;
+  LavaFlow:=true; LavaRate:=25;
+ end; { Level9 }
+
+procedure Level11; 
+ begin
+  FP[1]:= '1                                                              Z';
+  FP[2]:= '#(#(#(#(####################--########################]]#X@@@@@ ';
+  FP[3]:= '1#1#1#1###33333--KK##"////////##V--VVV-V---+-+-+-+-+## 2#X@3@+@ ';
+  FP[4]:= '#(#(#(#(##333333--K##/////////##-VV-V-V-V##-+-+-+-+-##2 #X@3@+@ ';
+  FP[5]:= '(#(#(#(###3333333--##**///////##V-V-V-VV-##+-+-+-+-+## 2#X@3@+@I';
+  FP[6]:= '#(#(#(#(##333333333##C*///////##-VVV-VV*V##-+-+-+-+-##2 #X@3@+@ ';
+  FP[7]:= '(#(#(#(###-?################]-##]I################]-##2 #X@3@+@ ';
+  FP[8]:= '#(#(#(#(##-===*==-=##W-W-W-W-W##;;;;;;;;|##DD DDDD D##N2#X@3@+@ ';
+  FP[9]:= '2#2#2#2###-=--==-=-##-W-W-W-W-##;;;;;;;;;##D D  DDD ##2 #X@3@+@ ';
+  FP[10]:='#(#(#(#(##=-=-=-==-##W-W-W-W-W##;;;;;;;;;## DDDD D D##]]#X@3@+@ ';
+  FP[11]:='(#(#(#(###=*==-==-=##-W-W-W-W---......3;K##D  *DD DD##2 #X@3@+@ ';
+  FP[12]:='#(#Q#(#(#########]-########################I]#########2 #X@3@+@I';
+  FP[13]:='(#(#(#(###HOOOOOOOO##1-1-1-1-1`---22222-C##2-22--22*## 2#X@3@+@ ';
+  FP[14]:='#C#C#C#C##OOOOOOOOO##-1-1-1-1-##--2***2--##-22-22-22##2N#X@3@+@ ';
+  FP[15]:='(#(#(#(###OOOOOOOOO##--1-1-1-1##--2***2--##-2-22-2-2## 2#X@3@+@ ';
+  FP[16]:='33333333##OOOOOOOO<##[--1-1-1-##--22222-Z##2-22*222-##&2#X@3@+@ ';
+  FP[17]:='##########]-################]-##]S################-]##2E#X@3@+@ ';
+  FP[18]:='#crazy####::-:::--:##..-..*..-##\\\\\\\\!##-M-M-M-M-##DD#X@3@+@ ';
+  FP[19]:='#cubicals#:-:::-::-##.-.-...-.##\\\\\\\\\##M-M-M-M-M##DD#X@3@+@I';
+  FP[20]:='#the######:-:--::-:##-...-.-..##\\\\\\\\\##-M-M-M-M-##DD#X@3@+@ ';
+  FP[21]:='#sequel###::-:::::-`--.*..-..*##\\\\\\\\\--M-M-M-M-K##DD#X@3@+@ ';
+  FP[22]:='################################-#####################LL#X@3@+@ ';
+  FP[23]:='K)))))))))))))))))))))))))))))))))))))))))33333333333#LL#X@3@+@P';
+  Slow:=#142; Medium:=#148; Fast:=#234;
+  Convert_Format;
+  T[2]:=30000;
+ end; { Level11 }
+
+procedure Level13;
+ begin
+  FP[1]:= '----XXVVVVVVV##K-333##     #Cö###thank#you#for#playing#kroz####K';
+  FP[2]:= '-####VV+++++VV### U3##  P  ##9#################################-';
+  FP[3]:= '-###VV+++++++VV##333##                ****3333333C-##  K##W-3) X';
+  FP[4]:= '-##VVV+++++++VVV######## ####;#;#;#;# #XX***######`## U ####3) X';
+  FP[5]:= '-1##VV+++++++VV####C##* ] *##3#3#3#3#ö#XX##H######`##T V##*-3) X';
+  FP[6]:= '-#1##VV+++++VV####XXX########W#W#W#W# #XX##K######`#########3) X';
+  FP[7]:= '-#11##VVVVVVV#####XXX##/C/########### #CC####KCCTNNN```L##+-3) X';
+  FP[8]:= '-##################X##//\////####  +  ######################3) X';
+  FP[9]:= '-::-:::---:---------/\/\///\///## ###666666#K###333333333#*-3) X';
+  FP[10]:='-:-:-:-:::-:#########////\///\/   ########6# ####(#(#(#(####3) X';
+  FP[11]:='-:-:-::--:::###OOO###!\///\///### #111111#.# ###(#(#K#(#(#T-3) X';
+  FP[12]:=';-:::---::::##ORRROO###//C//###*# ##1111##.#3####(#(#(#(####3) X';
+  FP[13]:='O############ORRRRRRO##########*#+###11###.#.###(#(#(#(#(#*-3) X';
+  FP[14]:='OOOóOOOOOOOOORRRRRRO###########*# ###//###.#.#Z##(#(#(#(####3) X';
+  FP[15]:='#############RRRROO##3333TTTT        II  #.#.# #(#(#(#(#(#+-3) X';
+  FP[16]:='.K-I====II=###GOO#### ################## #.#.# ##E#E#E#E####3) X';
+  FP[17]:='===II==I==I##########-XXXXXXXXXXXXX#   # #.#.# #(#(#(#(#(#*-3) X';
+  FP[18]:='====I=I==I=####   ###--------------- U # #.#.# ##(#(#(#(####3) X';
+  FP[19]:='==II==I===I### ### ##-1111111111111#   #+#.#.# #(#(#(#(#(#W-3) X';
+  FP[20]:='=I===I==II=#### ## ##-################## #.#.# ##(#(#(#(####### ';
+  FP[21]:='I===I==I===##  ## ### XWWWWWWWWWWWW##### #...#                I ';
+  FP[22]:='=II=I=I==I=# ####  ## #WWWWWWWWWWWW##### ###################### ';
+  FP[23]:='===I===II=I-##?` ##   ############V#####          ++++++++++C3  ';
+  Slow:=#143; Medium:=#153; Fast:=#234;
+  Convert_Format;
+  LavaFlow := true; LavaRate:=12;
+ end; { Level13 }
+
+procedure Level15;
+ begin
+  FP[1]:= 'VVVV%%%%%%///2)))2)))2)))2)))2)))2)))2)))2)))2)))2))))))))))ô7-[';
+  FP[2]:= 'VVVVVV#############################################XXXXXX)))ô7U-';
+  FP[3]:= 'VVVVVVV-----------2222222222222222222222222222222)))))))))))ô777';
+  FP[4]:= '<VVVVVVVOOOOOOOOO--222222222222222222222))))))--------------ôôôô';
+  FP[5]:= '666VVVVVVVOOOOOOOO--22222222222222222222)##DD##H++++++++++++++++';
+  FP[6]:= '8888VVVVVVVOOOOOOOO--22222222B2222222222)##DD###################';
+  FP[7]:= '    2VVVVVVVKOOOOOOO-2222222222222222222)##DD`-----2---C-I--.-]ñ';
+  FP[8]:= ' 666   VVVVVVVVOOOOO-2222222222222222222)##DD###################';
+  FP[9]:= ' 6U6    VVVVVVVVOOOO-2222222222222222222)##(((((*(E(4MMMMMMMM444';
+  FP[10]:=' 666  P  VVVVVVVVOOO-2222222222222222222)##((*((((E(4MMMMMMMM4LL';
+  FP[11]:='            VVVVVVVO-----------222222222)##(((((((E*4MMMMMMMM444';
+  FP[12]:='             VVVVVVVVXXXXXXXXX-222222222-#######################';
+  FP[13]:=' 2      2     VVVVVVVVXXXXXXXX-222222222------T------2--2--2-]òK';
+  FP[14]:='###             VVVVVVVV888XXX-222222222-#######################';
+  FP[15]:='22####        2   VVVVVVV"8XXX-222222222))))))-----)))))))))))))';
+  FP[16]:='222C               VVVVVVV8XXX-222222222222222-555-222222222222)';
+  FP[17]:='222C     2           VVVVVVXXX-222222222222222-5K5-222222222222)';
+  FP[18]:='22####       //   2   VVVVVVXX-222222222222222-555-222222222222)';
+  FP[19]:='###        /////      VVVVVVVX-222222222222222-----222222222222)';
+  FP[20]:='!   2     ///>///      VVVVVVV-22222222222222222222222222222222)';
+  FP[21]:='ööö        /////       VVVVVVVV)))))))))))))))))))))))))))))))))';
+  FP[22]:='99ööööö    * //        VVVVVVVVV)))))######################88###';
+  FP[23]:='|9.....          2     VóVVVVVVVV))))888888888888Q888888888888õK';
+  Slow:=#142; Medium:=#148; Fast:=#234;
+  Convert_Format;
+ end; { Level15 }
+
+procedure Level17;
+ begin
+  FP[1]:= '<3333333333333333333333333333333#K#OOOOOOOOOOOOOOOOOOOó33333333[';
+  FP[2]:= '33333333333333333333333333333333#ô#33333333333333333333333333333';
+  FP[3]:= '33333333333333333333333333333---#H#33333333333333333333333333333';
+  FP[4]:= '33333333336666663333333333333-U-#4#33333333333333333333333333333';
+  FP[5]:= '33333333336%W%W63333333333333---#4#33333333333################33';
+  FP[6]:= '33333333336W%W%63333333333333333#4#3333333333?#11111111111111#33';
+  FP[7]:= '33333333336%W%W63333333333333333#4#-###########/\//////\/////##-';
+  FP[8]:= '33333333336666663333333333333333#4#-#**********/////\/\///\//\/-';
+  FP[9]:= '33333333333333333333333333333333#4#-#**********\//\//////\/////-';
+  FP[10]:='--3333333333333333333333333333355555###########################-';
+  FP[11]:='K-333333333333333333333333333335T.T5#C-B--------B--------B------';
+  FP[12]:='###############################5.P.5############################';
+  FP[13]:='#chamber#of#horror#3333333333335T.T5XXXXXXXXXXXXXXXXXXXXXXXXXX--';
+  FP[14]:='###################33333333333355555XXXXXXXXXXXXXXXXXXXXXXXXXX-K';
+  FP[15]:='33333333333333333333333333333333#7##############################';
+  FP[16]:='33333333333333333333333333333333#7#K-MMMMMMMXWWWWWWWWWWWWWWWWWWW';
+  FP[17]:='3333---333333333B333333333333333#7#--MMMMMMMX3333333333333333333';
+  FP[18]:='3333-K-3333333333333333333333333#7#MMMMMMMMMX3333333333333333333';
+  FP[19]:='3333---333333333333333###########7#MMMMMMMMMX3333333333333333333';
+  FP[20]:='3333333333333333333333#WWWWWE%%%#7#MMMMMMMMMX3333333333333333333';
+  FP[21]:='3333333333333333333333#WWWWW#####ô#MMMMMMMMMX333333333---3333333';
+  FP[22]:='3333###################-#####* !#ñ#MMMMMMMMMX333333333-U-3333333';
+  FP[23]:='|33388888888888888DDDDD-õDLL#  ò#K#MMMMMMMMMX333333333---333333"';
+  Slow:=#142; Medium:=#153; Fast:=#9;
+  Convert_Format;
+  T[3]:=1700;
+ end; { Level17 }
+
+procedure Level19;
+ begin 
+  FP[1]:= '-P     !     CRRRWRRWRRRRRRRRRRR-1--1--1-RRC)))))))RK******2    ';
+  FP[2]:= '-RRRRRRRRRRRRRRRR3RR3RR----------RRRRRRRXRRRRRRRRR)RRRRRRRRRRRR-';
+  FP[3]:= '-----RRRRRRRRRRRR;RR;RR-RRR RRRR-1RRXXCRXRCXXRRRR)))RRRCCC]-----';
+  FP[4]:= 'RRRR     *****2        MRRR RRRR-1RRXRRRBRRRXRRRRXXXRRRRRRRRRRR-';
+  FP[5]:= 'R+RRRRRRRRRRRRRRRRRRRRRRRRR RRRR-1RRXRRXXXRRXRR                M';
+  FP[6]:= 'R-----]-----ñRRRK3333XXXXRRZRW1;-1RRXXXXXXXXXRR-R///RXXXXXXR-RDR';
+  FP[7]:= 'R-RRRRRRRRRRRRRR-RRRRRRRRRR RRRR-RRRRRRRRRRRRRR-R333RRRRRRRR-R+R';
+  FP[8]:= '-----------EDDDD&DDDLLR     RW1;----DWDWDWDWD---R333RRRRRWRR-R+R';
+  FP[9]:= '-RRRRRRRRRRRRRRRRRRRRRRIRRRRRRRRRRRRRRRRRRRRRRRRRRRRRKRRR3RR-R+R';
+  FP[10]:='-RR=-*=-==-=*-=-=+RR*]-]]*-]]-]]]--))))22222R3333?RRR-RRR;RR-R+R';
+  FP[11]:='-RRK==-=+-=-==-=--RR]-]]]-]-)]-]-]]R-RRRRRRRR333RRRR;;;RR----R+R';
+  FP[12]:='-RRRRRRRRRRRRRRRR RR-]]-]-]]]]-]]-]R;RR"þþþþþþþþþ[RR333RR-RRRR+R';
+  FP[13]:='------------R     RR]--]-]?*--]--]*RKRRþþþþtheþþþþRR333RR-R2RR+R';
+  FP[14]:='R-RRRRRRRRR-R RRRRRRRRRRRRRRRRRRRRRRRRRþþþwaterþþþRR333RR-R+RR+R';
+  FP[15]:='R4444444-UR------R-M                -RRþlabyrinthþRR...RR--+RR+R';
+  FP[16]:='RRRRRRRRRRRRRRRR-R-RRRRRRRRRRRRRRRRR-RRþþþþþþþþþþþRR...RR-RRRR2R';
+  FP[17]:='-RU-XXXX3333-TKR-R-R*R+3-2-2-1-1-RCR-RR<þþþþþþþþþ|RR...RR-*2RRKR';
+  FP[18]:='-RRRRRRRRRRRRRRR-R-R-R+3-2-2-1-1-R R-RRRRRRR-RRRRRRR   RR-RRRRRR';
+  FP[19]:='-----------------R-R--+3-2-2-1-1-  R-RRMMMMMMMMM       RR-----RR';
+  FP[20]:='-RRRRRRRRRRRRRRRRR-R--+3-2-2-1-1-  R-RRRRRRRRRRRRRRRR RRRRRRR-RR';
+  FP[21]:='-RR3333333333333RR-R-R+3-2-2-1-1-R RM              RR        -RR';
+  FP[22]:='-RR5555555555555RR-RKR+3-2-2-1-1-R-RRRRRRRRRRRRR R-RRRRRRRRRR-RR';
+  FP[23]:='---+--+--+--+--ò---RRRRRRRRRRRRRRR-M             R------------RR';
+  Slow:=#143; Medium:=#148; Fast:=#234;
+  Convert_Format;
+ end; { Level19 }
+
+procedure Level20;
+ begin
+  FP[1]:= 'S  3  23     3    2 3    3  36WWWWWWWWWWWWWWWWWWWWW6   2 3:2222X';
+  FP[2]:= 'O#@@@@ - 3 - 2  3-   2-3  -2 66666666666666666666666 3  3 :2U22X';
+  FP[3]:= 'O#+@2@ 3 -2 ######### - 2  -       -       -3  2  3  3 -2 :2222X';
+  FP[4]:= 'O#+@2@ -   ##K#####"##  -3 - 3)MMMMMMMMM   -   -3 3 -   3 ::::::';
+  FP[5]:= '[#+@2@- 3 ##5##&%&##5## 2  2  )M#######M   -  32  -2 3 - 2:T->-:';
+  FP[6]:= 'O#+@2@ 2-##5##XXXXX##5##  -3  )M##&P!##M   - 2 -3   3   3 ::::;:';
+  FP[7]:= 'O#+@2@3  ##5##X-A-X##5##2     )M#######M   -3   -3 2- 3 -3 23  X';
+  FP[8]:= 'O#+@2@ - ##3##XXXXX##3## 3 - 3)MMMMMMMMM   #######smúwasúhere# X';
+  FP[9]:= 'O#+@2@2 3 ##3##EEE##3##2 -   -))   -N   - &##CCC##T]***Q***]T# X';
+  FP[10]:='G#+@2@3  - ##3##D##3## 3- 2-3  -#############777############## #';
+  FP[11]:='O#+@2@ - 2-3##3#D#3##2 - 2  - - 77---------------ô;K++++CCC3ó#U#';
+  FP[12]:='O#+@2@ 2 3  2##333##3   2 3-2 3-##############################-#';
+  FP[13]:='O#+@2@N -  3- ##3## - 2 -G2  - 3 (2222222222222222222222222(T#C#';
+  FP[14]:='O#+@2@ 3  2 - ##5##- 2 -3 - 3 -  ((((((((((((G((((((((((((((K#C#';
+  FP[15]:='O#+@2@-  -  3 ##5##3 -2  - 2  -  (2222222222222222222222222(T#|#';
+  FP[16]:='K#+@2@3 - 2 - ##5##2- #@@@@@# ################################-#';
+  FP[17]:='O#+@2@ - 3 - 2##5## 3 #MMMMM#2##<)C)))333333)))K##òI=II=IT==I=I=';
+  FP[18]:='O#+@2@3 2 2  -##5## - #MMMMM#2##))))333333)))))T##I=I==I=I=I=I==';
+  FP[19]:='O#+@2@ -2-  3 ##D##3-2#MMMMM#@##))333333)))õõõ44##I======I=I====';
+  FP[20]:='O#+@2@ -   3-2##H##  -#MMMMM#;##33333))))õõõ444V##=II===I===II==';
+  FP[21]:='O#+@2@3 -2- - ##`##- 3#MMMMM#Z##))))))õõõõ44GVVV##===I=G======I=';
+  FP[22]:=']#+@2@  - 32 -##`## 2 #MMMMM####õõõõõõõõ444VVVVV##=I=I=I=II=I=I=';
+  FP[23]:='?#+@2@ -3  -3   -  3- #MMMMM88Iñõõõõõõõ44VVVVVVV##K=I===I==I=I*=';
+  Slow:=#143; Medium:=#153; Fast:=#1;
+  Convert_Format;
+  LavaFlow:=true; LavaRate:=99;
+ end; { Level20 }
+
+begin
+end. { Levels }

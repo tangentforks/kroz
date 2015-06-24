@@ -1,0 +1,35 @@
+|Aษออออออออออออออปออออออออออออออออออออออออออออออออออออออออออออออออษออออออออออออออป
+|Aบ |6Fun 'n Games |Aบออออออออออออออออ ^1Dungeons of Kroz |Aออออออออออออออบ |6Fun 'n Games |Aบ
+|Aศออออออออออออออผออออออออออออออออออออออออออออออออออออออออออออออออศออออออออออออออผ
+^Cby
+^CScott Miller
+
+   Back in BIG BLUE DISK #20, we published Kingdom of Kroz by Scott Miller.
+This game was the runner-up in our CodeQuest programming contest, and it proved
+popular among our readers.
+
+   Scott's back now, with a sequel.  Dungeons of Kroz works on the same general
+principle as the earlier game, but with a whole new set of dungeons for you to
+explore.
+
+   On each level, you try to avoid the monsters, and stock up on the gems and
+whips that you need to survive.  (One or more gems are lost every time you hit a
+monster, and if you lose all your gems, you die on the next hit; the whip can
+clear away monsters and crumbled walls in your way.)  You may also find other
+useful things, like keys to unlock doors.  At the bottom of the dungeon, a great
+treasure awaits for the daring and skillful adventurer who makes it.
+
+   You can save a game in progress in order to resume after an interruption or
+have several tries at a tough level without retracing all previous levels.
+However, only the status as of the beginning of the current level is saved;
+anything you did after you entered the level won't be saved.  You've got to make
+it to the end of the level and save again for your later gains to be preserved.
+
+   See the instructions within the program for more information.
+
+   To run this program outside ^1Big Blue Disk^0, type:  ^1DUNGEONS^0.
+
+DISK FILES THIS PROGRAM USES:
+^FDUNGEONS.COM
+^FDUNGEONS.000
+^FDUNGEONS.HS
